@@ -1,0 +1,58 @@
+.stats-highlight {
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.stats-text {
+  flex: 1;
+  text-align: left;
+  padding: 0 2rem;
+}
+
+.stats-text h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.stat-number {
+  font-size: 8rem;
+  font-weight: bold;
+  color: var(--primary-green);
+  line-height: 1;
+}
+
+.emphasized-text {
+  font-size: 1.5rem; 
+  font-weight: 700; 
+  color: seagreen;
+}
+
+.stats-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.tree-illustration {
+  width: 500px;
+  height: 500px;
+  margin-bottom: 1.5rem;
+  background-image: url('../../assets/images/HomePage/main_tree.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  .stats-highlight {
+    flex-direction: column;
+  }
+  
+  .stats-text {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}

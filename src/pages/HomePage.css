@@ -1,0 +1,67 @@
+:root {
+  --primary-green: #2e8b57;
+  --light-green: #8ee4af;
+  --background-color: white;
+  --text-color: #333;
+  --card-bg: #f9f9f9;
+  --highlight-color: #2e8b57;
+}
+
+body {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  margin: 0;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  min-height: 100vh;
+}
+
+.content-container {
+  padding-left: 10rem;
+  padding-right: 10rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.waste-app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Apply the fade-in effect in sequence */
+.waste-app > * {
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+/* Staggered animation delays */
+.waste-app > *:nth-child(1) { animation-delay: 0.2s; }
+.waste-app > *:nth-child(2) { animation-delay: 0.4s; }
+.waste-app > *:nth-child(3) { animation-delay: 0.6s; }
+.waste-app > *:nth-child(4) { animation-delay: 0.8s; }
+.waste-app > *:nth-child(5) { animation-delay: 1s; }
+
+
+@media (max-width: 768px) {
+  .content-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}

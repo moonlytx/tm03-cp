@@ -1,0 +1,46 @@
+.stats-section {
+  display: flex;
+  gap: 2rem;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-icon {
+  background-color: #dcfce7;
+  padding: 1rem;
+  border-radius: 9999px;
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.stat-icon img {
+  width: 110px;
+  height: auto;
+}
+
+.stat-value {
+  font-size: 3.75rem;
+  line-height: 1;
+  font-weight: bold;
+  color: #14532d;
+  margin: 0.5rem 0;
+}
+
+.stat-value-plus {
+  color: #22c55e;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #4b5563;
+}

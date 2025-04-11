@@ -1,0 +1,24 @@
+.hero {
+  padding: 2rem 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-size: 5rem;
+  color: var(--primary-green);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.hero p {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: var(--primary-green);
+  font-weight: bold;
+}

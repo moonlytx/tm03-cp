@@ -1,0 +1,31 @@
+/* Add this to your WasteDashboard.css file */
+
+.share-button {
+  background-color: var(--highlight-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto;
+}
+
+.share-button:hover {
+  background-color: var(--highlight-dark-color, #0056b3);
+}
+
+.share-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* You might want to add this variable to your CSS variables if it doesn't exist */
+:root {
+  --highlight-dark-color: #0056b3;
+} 
