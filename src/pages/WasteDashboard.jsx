@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserProfile, StatsCards, ProgressBar, WasteCategories, AccumulatedWeights }
   from '../components/WasteDashboard';
-import ShareButton from '../components/WasteDashboard/ShareButton';
+import SaveButton from '../components/WasteDashboard/SaveButton';
 import useWasteData from '../hooks/useWasteData';
 import './WasteDashboard.css';
 
@@ -38,8 +38,8 @@ const WasteDashboard = () => {
           <header className="waste-header">
             <h1>Point of You</h1>
             <p>Keep track of your recycling efforts to save the planet.</p>
-            {/* ShareButton positioned at the top right */}
-            <ShareButton />
+            {/* SaveButton positioned at the top right */}
+            <SaveButton />
           </header>
 
           <main>
@@ -83,8 +83,6 @@ const WasteDashboard = () => {
                 totalAccumulatedWaste={totalAccumulatedWaste}
               />
             </section>
-            
-            {/* Removed ShareButton from here */}
           </main>
         </div>
       </div>

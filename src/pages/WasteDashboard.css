@@ -48,7 +48,7 @@ main {
   text-align: center;
   margin-bottom: 4rem; 
   width: 100%; 
-  position: relative; /* Added for positioning ShareButton */
+  position: relative; /* Added for positioning SaveButton */
 }
 
 .waste-header h1 {
