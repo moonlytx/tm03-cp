@@ -16,11 +16,9 @@ const useWasteData = () => {
   });
   const [userName, setUserName] = useState(() => localStorage.getItem('userName') || 'Anonymous');
   const [isEditing, setIsEditing] = useState(false);
-  const [totalCount, setTotalCount] = useState(() => {
-    return parseInt(localStorage.getItem('totalCount') || 0);
-  });
-  const [plantsSaved, setPlantsSaved] = useState(() => {
-    return parseInt(localStorage.getItem('plantsSaved')) || 0;
+
+  const [wastebinCollected, setwastebinCollected] = useState(() => {
+    return parseInt(localStorage.getItem('wastebinCollected')) || 0;
   });
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [totalWaste, setTotalWaste] = useState(() => {
@@ -99,7 +97,7 @@ const useWasteData = () => {
       const totalWeightAfterSave = totalWaste + newWeight;
       const cycles = Math.floor(totalWeightAfterSave / 60);
       const updatedTotalWaste = totalWeightAfterSave % 60;
-      const updatedPlantsSaved = plantsSaved + cycles;
+      const updatedwastebinCollected = wastebinCollected + cycles;
       const updatedTotalCarbonEmission = totalCarbonEmission + newCarbon;
 
       const updatedAccumulatedWeights = { ...accumulatedWeights };
@@ -115,16 +113,14 @@ const useWasteData = () => {
       const updatedTotalAccumulatedWaste = totalAccumulatedWaste + newWeight;
 
       localStorage.setItem('totalWaste', updatedTotalWaste.toString());
-      localStorage.setItem('totalCount', (totalCount + newCount).toString());
       localStorage.setItem('accumulatedWeights', JSON.stringify(updatedAccumulatedWeights));
       localStorage.setItem('wasteCounts', JSON.stringify(resetCounts));
-      localStorage.setItem('plantsSaved', updatedPlantsSaved.toString());
+      localStorage.setItem('wastebinCollected', updatedwastebinCollected.toString());
       localStorage.setItem('totalAccumulatedWaste', updatedTotalAccumulatedWaste.toString());
       localStorage.setItem('totalCarbonEmission', updatedTotalCarbonEmission.toString());
 
-      setPlantsSaved(updatedPlantsSaved);
+      setwastebinCollected(updatedwastebinCollected);
       setTotalWaste(updatedTotalWaste);
-      setTotalCount(prev => prev + newCount);
       setAccumulatedWeights(updatedAccumulatedWeights);
       setCounts(resetCounts);
       setHasUnsavedChanges(false);
@@ -162,8 +158,7 @@ const useWasteData = () => {
     counts,
     accumulatedWeights,
     hasUnsavedChanges,
-    totalCount,
-    plantsSaved,
+    wastebinCollected,
     totalAccumulatedWaste,
     totalCarbonEmission,
     handleNameClick,

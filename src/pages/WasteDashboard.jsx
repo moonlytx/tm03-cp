@@ -13,8 +13,7 @@ const WasteDashboard = () => {
     userName,
     isEditing,
     totalWaste,
-    totalCount,
-    plantsSaved,
+    wastebinCollected,
     progressPercentage,
     counts,
     accumulatedWeights,
@@ -52,8 +51,7 @@ const WasteDashboard = () => {
                 onNameChange={setUserName}
               />
               <StatsCards
-                plantsSaved={plantsSaved}
-                totalCount={totalCount}
+                wastebinCollected={wastebinCollected}
               />
             </section>
 
