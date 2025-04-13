@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserProfile, StatsCards, ProgressBar, WasteCategories, AccumulatedWeights }
   from '../components/WasteDashboard';
-import SaveButton from '../components/WasteDashboard/SaveButton';
+import ShareButton from '../components/WasteDashboard/ShareButton';
 import useWasteData from '../hooks/useWasteData';
 import './WasteDashboard.css';
 
@@ -37,8 +37,8 @@ const WasteDashboard = () => {
           <header className="waste-header">
             <h1>Point of You</h1>
             <p>Keep track of your recycling efforts to save the planet.</p>
-            {/* SaveButton positioned at the top right */}
-            <SaveButton />
+            {/* ShareButton positioned at the top right */}
+            <ShareButton />
           </header>
 
           <main>

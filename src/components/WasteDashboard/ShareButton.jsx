@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
-import { SaveAll } from 'lucide-react';
-import './SaveButton.css';
+import { ImageDown } from 'lucide-react';
+import './ShareButton.css';
 
 const ShareButton = () => {
   const [isCapturing, setIsCapturing] = useState(false);
@@ -45,8 +45,8 @@ const ShareButton = () => {
         disabled={isCapturing}
         className="share-button"
       >
-        <SaveAll size={22} className="share-button-icon" />
-        {isCapturing ? 'Capturing...' : ' Save Your Progress'}
+        <ImageDown size={22} className="share-button-icon" />
+        {isCapturing ? 'Capturing...' : ' Save Image'}
       </button>
     </div>
   );
