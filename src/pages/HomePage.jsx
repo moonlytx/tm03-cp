@@ -10,9 +10,11 @@ function HomePage() {
 
   return (
     <div className="waste-app">
-      <Hero />
-      <Comm_Stats totalCarbonEmission={totalCarbonEmission} />
-      <FeatureCards />
+      <div className="content-container">
+        <Hero />
+        <Comm_Stats totalCarbonEmission={totalCarbonEmission} />
+        <FeatureCards />
+      </div>
     </div>
   );
 }
