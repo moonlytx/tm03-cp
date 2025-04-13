@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import '../assets/styles/global.css'
 
 
 const useWasteData = () => {
