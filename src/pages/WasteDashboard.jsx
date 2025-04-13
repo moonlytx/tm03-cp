@@ -38,6 +38,8 @@ const WasteDashboard = () => {
           <header className="waste-header">
             <h1>Point of You</h1>
             <p>Keep track of your recycling efforts to save the planet.</p>
+            {/* ShareButton positioned at the top right */}
+            <ShareButton />
           </header>
 
           <main>
@@ -82,8 +84,7 @@ const WasteDashboard = () => {
               />
             </section>
             
-            {/* ShareButton with consistent margins */}
-            <ShareButton />
+            {/* Removed ShareButton from here */}
           </main>
         </div>
       </div>

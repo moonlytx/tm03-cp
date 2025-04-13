@@ -48,6 +48,7 @@ main {
   text-align: center;
   margin-bottom: 4rem; 
   width: 100%; 
+  position: relative; /* Added for positioning ShareButton */
 }
 
 .waste-header h1 {
@@ -99,8 +100,13 @@ main {
   .waste-header h1 {
     font-size: 2rem;
   }
+  
+  /* Make the share button responsive */
+  .share-button-container {
+    position: static;
+    margin-top: 1rem;
+  }
 }
-
 
 .waste-container {
   display: flex;

@@ -1,9 +1,10 @@
 /* Updated ShareButton.css file */
 
 .share-button-container {
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0;
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  margin: 0;
 }
 
 .share-button {
