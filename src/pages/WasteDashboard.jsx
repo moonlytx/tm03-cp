@@ -35,9 +35,6 @@ const WasteDashboard = () => {
     <div className="waste-app">
       <div className="container">
         <div className="content-container waste-container">
-          {/* Share Button positioned at top right */}
-          <ShareButton />
-          
           <header className="waste-header">
             <h1>Point of You</h1>
             <p>Keep track of your recycling efforts to save the planet.</p>
@@ -85,7 +82,8 @@ const WasteDashboard = () => {
               />
             </section>
             
-            {/* Removed the button from here since it's now at the top */}
+            {/* ShareButton with consistent margins */}
+            <ShareButton />
           </main>
         </div>
       </div>

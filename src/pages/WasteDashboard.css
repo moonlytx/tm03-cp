@@ -102,37 +102,9 @@ main {
 }
 
 
-.share-button-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 10;
-}
-
-.share-button {
-  background-color: #2e8b57; /* Green color */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 16px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.share-button:hover {
-  background-color: #216e42; /* Darker green for hover state */
-}
-
-.share-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
 .waste-container {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
 }

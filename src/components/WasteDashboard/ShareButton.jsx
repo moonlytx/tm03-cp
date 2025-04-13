@@ -1,6 +1,8 @@
 // ShareButton.jsx
 import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
+import { Share2 } from 'lucide-react';
+import './ShareButton.css';
 
 const ShareButton = () => {
   const [isCapturing, setIsCapturing] = useState(false);
@@ -44,6 +46,7 @@ const ShareButton = () => {
         disabled={isCapturing}
         className="share-button"
       >
+        <Share2 size={16} className="share-button-icon" />
         {isCapturing ? 'Capturing...' : 'Share as Image'}
       </button>
     </div>
