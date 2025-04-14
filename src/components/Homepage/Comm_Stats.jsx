@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footprints } from 'lucide-react';
+import { Footprints , Trees } from 'lucide-react';
 import './Comm_Stats.css';
 
 function Stats({ totalCarbonEmission }) {
@@ -11,12 +11,17 @@ function Stats({ totalCarbonEmission }) {
       <div className="stats-text">
         <h2>Carbon Footprint Reduced by the Community</h2>
         <div className="stat-number-container">
-          <Footprints className="footprint-icon" size={50} color="seagreen" />    
-          <div className="stat-number">{formattedCarbon}</div>
-          
+        <Footprints size={55} color="seagreen" />    
+        <div className="stat-number">{formattedCarbon}</div>
+        <p className="units">g·CO₂e</p> 
         </div>
-        
-        <p><strong className="emphasized-text">g·CO₂e</strong></p>  
+         
+        <h2>Or</h2>
+        <div className="stat-number-container">
+          <Trees size={55} color="seagreen" />    
+          <div className="stat-number">~300</div>
+          <p className="units">Trees</p> 
+        </div>
         <p>
           What started as a small effort to reduce waste has
           blossomed into a <strong>community-wide movement</strong>, with

@@ -24,18 +24,15 @@
 }
 
 .stat-number {
-  font-size: 8rem;
+  font-size: 7rem;
   font-weight: bold;
   color: var(--primary-green);
   line-height: 1;
 }
 
-.footprint-icon {
-  margin-top: 1rem;
-}
-
-.emphasized-text {
-  font-size: 1.5rem;
+.units {
+  margin-bottom: -2rem; 
+  font-size: 2rem;
   font-weight: 700;
   color: seagreen;
 }
