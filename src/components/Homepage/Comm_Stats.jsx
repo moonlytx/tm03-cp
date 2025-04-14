@@ -5,6 +5,7 @@ import './Comm_Stats.css';
 function Stats({ totalCarbonEmission }) {
   // Formatting the carbon emission value
   const formattedCarbon = totalCarbonEmission ? Math.round(totalCarbonEmission * 1000).toLocaleString() : '0';
+  const treesPlanted = totalCarbonEmission ? Math.round(totalCarbonEmission / 25).toLocaleString() : '0'
 
   return (
     <section className="stats-highlight">
@@ -15,11 +16,11 @@ function Stats({ totalCarbonEmission }) {
         <div className="stat-number">{formattedCarbon}</div>
         <p className="units">g·CO₂e</p> 
         </div>
-         
-        <h2>Or</h2>
+        
+        <h2>Equivalent to Planting</h2>
         <div className="stat-number-container">
           <Trees size={55} color="seagreen" />    
-          <div className="stat-number">~300</div>
+          <div className="stat-number">~{treesPlanted}</div>
           <p className="units">Trees</p> 
         </div>
         <p>
