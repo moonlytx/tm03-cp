@@ -11,7 +11,7 @@ function Stats({ totalCarbonEmission }) {
       <div className="stats-text">
         <h2>Carbon Footprint Reduced by the Community</h2>
         <div className="stat-number">{formattedCarbon}</div>
-        <p><strong className="emphasized-text">g·CO₂</strong></p>
+        <p><strong className="emphasized-text">g·CO₂e</strong></p>
         <p>
           What started as a small effort to reduce waste has
           blossomed into a <strong>community-wide movement</strong>, with

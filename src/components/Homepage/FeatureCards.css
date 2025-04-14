@@ -25,11 +25,11 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }   
 
-.card .stats-icon {
+.card .report-icon {
   width: 120px;
   height: 120px;
   margin-bottom: 1.5rem;
-  background-image: url('../../assets/images/HomePage/stats.png');
+  background-image: url('../../assets/images/HomePage/report.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

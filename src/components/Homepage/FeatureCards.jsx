@@ -7,9 +7,9 @@ function FeatureCards() {
 
   return (
     <section className="feature-cards">
-      <div className="card" onClick={() => navigate('/stats')}>
-        <div className="card-icon stats-icon"></div>
-        <h3>Stats</h3>
+      <div className="card" onClick={() => navigate('/report')}>
+        <div className="card-icon report-icon"></div>
+        <h3>Report</h3>
         <p>Check your progress and your profile to see how much you have recycled.</p>
       </div>
       

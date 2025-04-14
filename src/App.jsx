@@ -15,7 +15,7 @@ function App() {
         <div className="page-wrapper">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/stats" element={<WasteDashboard />} />
+            <Route path="/report" element={<WasteDashboard />} />
             <Route path="/identify" element={<IdentifyPage />} />
             <Route path="/map" element={<MapPage />} />
           </Routes>
