@@ -17,11 +17,21 @@
   margin-bottom: 1rem;
 }
 
+.stat-number-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .stat-number {
   font-size: 8rem;
   font-weight: bold;
   color: var(--primary-green);
   line-height: 1;
+}
+
+.footprint-icon {
+  margin-top: 1rem;
 }
 
 .emphasized-text {
@@ -54,5 +64,9 @@
   .stats-text {
     text-align: center;
     margin-bottom: 2rem;
+  }
+
+  .stat-number-container {
+    align-items: center;
   }
 }
