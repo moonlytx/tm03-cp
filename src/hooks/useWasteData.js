@@ -37,7 +37,7 @@ const useWasteData = () => {
     const fetchWasteItems = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('http://156.225.17.211:5000/api/items');
+        const response = await fetch('http://thesupersix.top:5000/api/items');
         if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
         const data = await response.json();
         setWasteItems(data);
