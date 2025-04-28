@@ -1,6 +1,8 @@
 .container {
   min-height: 100vh;
   background-color: white;
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 
 /* Main Content */

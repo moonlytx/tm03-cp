@@ -3,7 +3,8 @@ import HomePage from './pages/HomePage';
 import WasteDashboard from './pages/WasteDashboard';
 import IdentifyPage from './pages/IdentifyPage';
 import MapPage from './pages/MapPage';
-import Navbar from './components/HomePage/Navbar';
+import Navbar from './components/Main/Navbar';
+import Footer from './components/Main/Footer';
 import { ToastContainer } from 'react-toastify';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         </div>
         {/* Control Duration of pop up message */}
         <ToastContainer position="top-center" autoClose={5000} />
+        <Footer /> 
       </div>
     </Router>
   );
