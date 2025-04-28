@@ -1,18 +1,17 @@
 import React from 'react';
-import { Save } from 'lucide-react';
 import './WasteCategories.css';
 
 // Import all tree stage images
-import tree0 from '../../assets/images/WasteDashboard/growing_tree/1.jpg';  
-import tree1 from '../../assets/images/WasteDashboard/growing_tree/2.jpg';
-import tree2 from '../../assets/images/WasteDashboard/growing_tree/3.jpg';
-import tree3 from '../../assets/images/WasteDashboard/growing_tree/4.jpg';
-import tree4 from '../../assets/images/WasteDashboard/growing_tree/5.jpg';
-import tree5 from '../../assets/images/WasteDashboard/growing_tree/6.jpg';
-import tree6 from '../../assets/images/WasteDashboard/growing_tree/7.jpg';
-import tree7 from '../../assets/images/WasteDashboard/growing_tree/8.jpg';
-import tree8 from '../../assets/images/WasteDashboard/growing_tree/9.jpg';
-import tree9 from '../../assets/images/WasteDashboard/growing_tree/10.jpg';
+import tree0 from '../../assets/images/ReportDashboard/growing_tree/1.jpg';  
+import tree1 from '../../assets/images/ReportDashboard/growing_tree/2.jpg';
+import tree2 from '../../assets/images/ReportDashboard/growing_tree/3.jpg';
+import tree3 from '../../assets/images/ReportDashboard/growing_tree/4.jpg';
+import tree4 from '../../assets/images/ReportDashboard/growing_tree/5.jpg';
+import tree5 from '../../assets/images/ReportDashboard/growing_tree/6.jpg';
+import tree6 from '../../assets/images/ReportDashboard/growing_tree/7.jpg';
+import tree7 from '../../assets/images/ReportDashboard/growing_tree/8.jpg';
+import tree8 from '../../assets/images/ReportDashboard/growing_tree/9.jpg';
+import tree9 from '../../assets/images/ReportDashboard/growing_tree/10.jpg';
 
 const getTreeImage = (progress) => {
   if (progress < 10) return tree0;

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import WasteDashboard from './pages/WasteDashboard';
+import WasteDashboard from './pages/ReportPage';
 import IdentifyPage from './pages/IdentifyPage';
 import MapPage from './pages/MapPage';
 import Navbar from './components/Main/Navbar';

@@ -1,9 +1,9 @@
 import React from 'react';
 import { UserProfile, StatsCards, ProgressBar, WasteCategories, AccumulatedWeights }
-  from '../components/WasteDashboard';
-import ShareButton from '../components/WasteDashboard/ShareButton';
+  from '../components/ReportDashboard';
+import ShareButton from '../components/ReportDashboard/ShareButton';
 import useWasteData from '../hooks/useWasteData';
-import './WasteDashboard.css';
+import './ReportPage.css';
 
 const WasteDashboard = () => {
   const {

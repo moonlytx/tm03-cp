@@ -1,5 +1,5 @@
 import React from 'react';
-import defaultAvatar from '../../assets/images/WasteDashboard/default_avatar.png';
+import defaultAvatar from '../../assets/images/ReportDashboard/default_avatar.png';
 import './UserProfile.css';
 
 const UserProfile = ({ userName, isEditing, onNameClick, onNameSave, onNameChange }) => (

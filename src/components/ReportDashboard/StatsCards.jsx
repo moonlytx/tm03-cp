@@ -1,6 +1,6 @@
 import React from 'react';
-import personal_bin_collected from '../../assets/images/WasteDashboard/personal_bin_collected.png';
-import personal_gco2e from '../../assets/images/WasteDashboard/personal_gco2e.png';
+import personal_bin_collected from '../../assets/images/ReportDashboard/personal_bin_collected.png';
+import personal_gco2e from '../../assets/images/ReportDashboard/personal_gco2e.png';
 import './StatsCards.css';
 
 

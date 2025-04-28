@@ -1,6 +1,6 @@
-import Hero from '../components/HomePage/Hero';
-import Comm_Stats from '../components/HomePage/Comm_Stats';
-import FeatureCards from '../components/HomePage/FeatureCards';
+import Hero from '../components/HomeDashboard/Hero';
+import Comm_Stats from '../components/HomeDashboard/Comm_Stats';
+import FeatureCards from '../components/HomeDashboard/FeatureCards';
 import useWasteData from '../hooks/useWasteData'; 
 import './HomePage.css';
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from '../components/HomePage/Navbar';
 import './MapPage.css';
 function MapPage() {
   return (
