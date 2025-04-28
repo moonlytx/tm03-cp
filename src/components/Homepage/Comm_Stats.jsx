@@ -16,6 +16,7 @@ function Stats({ totalCarbonEmission }) {
         <div className="stat-number">{formattedCarbon}</div>
         <p className="units">g·CO₂e</p> 
         </div>
+        <p className="disclaimer">* Reduced Greenhouse Gases Equivalent to Amount of Carbon Dioxide (CO₂) in Grams </p>
         
         <h2>Equivalent to Planting</h2>
         <div className="stat-number-container">
