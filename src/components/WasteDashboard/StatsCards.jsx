@@ -1,27 +1,36 @@
 import React from 'react';
-import number_of_waste_collected from '../../assets/images/WasteDashboard/number_of_waste_collected.png';
+import personal_bin_collected from '../../assets/images/WasteDashboard/personal_bin_collected.png';
+import personal_gco2e from '../../assets/images/WasteDashboard/personal_gco2e.png';
 import './StatsCards.css';
 
 
-const formatTotalWaste = (total) => {
-  if (total >= 1000) return `${(total / 1000).toFixed(1)}k`;
-  return total.toFixed(2);
-};
-
-const StatsCards = ({ wastebinCollected }) => (
-  <div className="stats-section">
-    <div className="stat-card">
-      <div className="stat-icon">
-        <img src={number_of_waste_collected} alt="Number of Bins Recycled" className="custom-icon" />
+const StatsCards = ({ totalCarbonEmission, wastebinCollected }) => {
+  // Format carbon emission value the same way as in your original code
+  const formattedCarbon = totalCarbonEmission ? Math.round(totalCarbonEmission * 1000) : 0;
+  
+  return (
+    <div className="stats-section">
+      <div className="stat-card">
+        <div className="stat-icon">
+          <img src={personal_gco2e} alt="Carbon Footprint Reduced" className="custom-icon" />
+        </div>
+        <h3 className="stat-value">
+        {formattedCarbon.toLocaleString()}
+        </h3>
+        <span className="stat-label">Carbon Footprint Reduced (g·CO₂e)</span>
       </div>
-      <h3 className="stat-value">
-      {wastebinCollected.toLocaleString()}
-      </h3>
-      <span className="stat-label">Number of Bins Recycled</span>
+      <div className="stat-card">
+        <div className="stat-icon">
+          <img src={personal_bin_collected} alt="Number of Bins Recycled" className="custom-icon" />
+        </div>
+        <h3 className="stat-value">
+        {wastebinCollected.toLocaleString()}
+        </h3>
+        <span className="stat-label">Number of Bins Recycled</span>
+      </div>
     </div>
-  </div>
-);
-
+  );
+}
 
 
 export default StatsCards;

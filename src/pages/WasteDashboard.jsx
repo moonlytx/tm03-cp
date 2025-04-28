@@ -18,6 +18,7 @@ const WasteDashboard = () => {
     counts,
     accumulatedWeights,
     totalAccumulatedWaste,
+    totalCarbonEmission,
     hasUnsavedChanges,
     handleNameClick,
     handleNameSave,
@@ -51,6 +52,7 @@ const WasteDashboard = () => {
                 onNameChange={setUserName}
               />
               <StatsCards
+                totalCarbonEmission={totalCarbonEmission}
                 wastebinCollected={wastebinCollected}
               />
             </section>

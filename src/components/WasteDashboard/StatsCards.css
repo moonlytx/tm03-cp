@@ -1,8 +1,9 @@
 .stats-section {
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
   flex-grow: 1;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  margin-left: 500px;
 }
 
 .stat-card {
@@ -29,7 +30,7 @@
 }
 
 .stat-value {
-  font-size: 3.75rem;
+  font-size: 2.8rem;
   line-height: 1;
   font-weight: bold;
   color: #14532d;
@@ -41,6 +42,6 @@
 }
 
 .stat-label {
-  font-size: 0.875rem;
-  color: #4b5563;
+  font-size: 1rem;
+  color: #14532d;
 }
