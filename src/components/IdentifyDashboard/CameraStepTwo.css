@@ -34,7 +34,7 @@
   left: 30px;
   transform: translateY(-50%);
   background-color: #13884c;
-  color: white;
+  color: black;
   font-weight: 700;
   border-radius: 9999px;
   padding: 10px;
@@ -198,6 +198,7 @@
   padding: 12px;
   border-radius: 8px;
   border: 1px solid #d1d5db;
+  color: black;
   font-size: 16px;
   margin-bottom: 20px;
 }

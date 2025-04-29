@@ -25,7 +25,7 @@ const ProgressBar = ({ progressPercentage, totalWaste }) => (
       </div>
       <span className="progress-end">100%</span>
     </div>
-    <p className="progress-text">{progressPercentage}% of Recycle Bin Collected (1 Bin = 1 Tree)</p>
+    <p className="progress-text">{progressPercentage}% of Recycle Bin Collected (1 Tree = 1 Bin)</p>
   </div>
 );
 

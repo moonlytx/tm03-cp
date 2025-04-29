@@ -1,5 +1,5 @@
 import React from 'react';
-import './WasteCategories.css';
+import './TreeProgress.css';
 
 // Import all tree stage images
 import tree0 from '../../assets/images/ReportDashboard/growing_tree/1.jpg';  
@@ -27,12 +27,12 @@ const getTreeImage = (progress) => {
   else return tree9;
 };
 
-const WasteCategories = ({
+const TreeProgress = ({
   progressPercentage,
   saveData,
   hasUnsavedChanges
 }) => (
-  <div className="waste-categories-container">
+  <div className="tree-progress-container">
     <div className="tree-container">
       <div className="tree-section">
         <img
@@ -45,4 +45,4 @@ const WasteCategories = ({
   </div>
 );
 
-export default WasteCategories;
+export default TreeProgress;

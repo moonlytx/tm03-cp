@@ -2,10 +2,10 @@ import React from 'react';
 import { Footprints , Trees } from 'lucide-react';
 import './Comm_Stats.css';
 
-function Stats({ totalCarbonEmission }) {
+function Stats({ communityCarbon }) {
   // Formatting the carbon emission value
-  const formattedCarbon = totalCarbonEmission ? Math.round(totalCarbonEmission * 1000).toLocaleString() : '0';
-  const treesPlanted = totalCarbonEmission ? Math.round(totalCarbonEmission / 25).toLocaleString() : '0'
+  const formattedCarbon = communityCarbon ? Math.round(communityCarbon * 1000).toLocaleString() : '0';
+  const treesPlanted = communityCarbon ? Math.round(communityCarbon / 25).toLocaleString() : '0'
 
   return (
     <section className="stats-highlight">

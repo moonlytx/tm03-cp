@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-
 const useWasteData = () => {
+  // All state hooks must be called unconditionally at the top level
   const [wasteItems, setWasteItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,28 +16,34 @@ const useWasteData = () => {
   });
   const [userName, setUserName] = useState(() => localStorage.getItem('userName') || 'Anonymous');
   const [isEditing, setIsEditing] = useState(false);
-
-  const [wastebinCollected, setwastebinCollected] = useState(() => {
+  const [totalCount, setTotalCount] = useState(() => {
+    return parseInt(localStorage.getItem('totalCount') || '0');
+  });
+  const [wastebinCollected, setWastebinCollected] = useState(() => {
     return parseInt(localStorage.getItem('wastebinCollected')) || 0;
   });
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [totalWaste, setTotalWaste] = useState(() => {
     return parseFloat(localStorage.getItem('totalWaste') || '0');
   });
-  const progressPercentage = Math.round((totalWaste / 60) * 100);
   const [totalAccumulatedWaste, setTotalAccumulatedWaste] = useState(() => {
     return parseFloat(localStorage.getItem('totalAccumulatedWaste') || '0');
   });
   const [totalCarbonEmission, setTotalCarbonEmission] = useState(() => {
     return parseFloat(localStorage.getItem('totalCarbonEmission') || '0');
   });
+  // New state for community carbon emission
+  const [communityCarbonEmission, setCommunityCarbonEmission] = useState(0);
 
-  // Fetch Data from API
+  // Calculate progress percentage after the state is initialized
+  const progressPercentage = Math.round((totalWaste / 60) * 100);
+
+  // Fetch waste items and community carbon emission
   useEffect(() => {
     const fetchWasteItems = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('http://thesupersix.top:5000/api/items');
+        const response = await fetch('https://carbonpatrol.top:8081/api/items');
         if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
         const data = await response.json();
         setWasteItems(data);
@@ -50,8 +56,67 @@ const useWasteData = () => {
       }
     };
 
+    // Function to fetch community carbon emission
+    const fetchCommunityCarbonData = async () => {
+      try {
+        const response = await fetch('https://carbonpatrol.top:8081/api/footprint/total');
+        if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+        const data = await response.json();
+        setCommunityCarbonEmission(data.total || 0);
+      } catch (err) {
+        console.error("Failed to fetch community carbon emission:", err);
+      }
+    };
+
     fetchWasteItems();
+    fetchCommunityCarbonData();
   }, []);
+
+  // Function to fetch community carbon emission (separate for external calls)
+  const fetchCommunityCarbonEmission = async () => {
+    try {
+      const response = await fetch('https://carbonpatrol.top:8081/api/footprint/total');
+      if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+      const data = await response.json();
+      setCommunityCarbonEmission(data.total || 0);
+      return data.total || 0;
+    } catch (err) {
+      console.error("Failed to fetch community carbon emission:", err);
+      return communityCarbonEmission; // Return current value if fetch fails
+    }
+  };
+
+  // Function to save carbon emission to the database
+  const saveCarbonEmissionToDatabase = async (carbonAmount) => {
+    try {
+      const response = await fetch('https://carbonpatrol.top:8081/api/footprint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ footprint: carbonAmount }),
+      });
+
+      if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+
+      const data = await response.json();
+      console.log('Carbon footprint saved:', data);
+
+      // Update community carbon emission after successful save
+      if (data.new_total) {
+        setCommunityCarbonEmission(data.new_total);
+      } else {
+        // If new_total not provided, fetch the latest
+        fetchCommunityCarbonEmission();
+      }
+
+      return data;
+    } catch (err) {
+      console.error("Failed to save carbon emission:", err);
+      toast.error("Failed to save your carbon footprint to the community database");
+      return null;
+    }
+  };
 
   const initializeCounts = (items) => {
     setCounts(prev => {
@@ -71,6 +136,29 @@ const useWasteData = () => {
     });
   };
 
+  const incrementCountByMaterial = (materialName, quantity = 1) => {
+    const matchedItem = wasteItems.find(item =>
+      item.item.toLowerCase() === materialName.toLowerCase()
+    );
+
+    if (!matchedItem) {
+      console.warn(`未找到匹配的材料: ${materialName}`);
+      return false;
+    }
+
+    setCounts(prev => {
+      const newCounts = {
+        ...prev,
+        [matchedItem.id]: (prev[matchedItem.id] || 0) + quantity
+      };
+      localStorage.setItem('wasteCounts', JSON.stringify(newCounts));
+      setHasUnsavedChanges(true);
+      return newCounts;
+    });
+
+    return true;
+  };
+
   const incrementCount = (type) => {
     setCounts(prev => ({ ...prev, [type]: prev[type] + 1 }));
     setHasUnsavedChanges(true);
@@ -81,6 +169,89 @@ const useWasteData = () => {
     setHasUnsavedChanges(true);
   };
 
+  // Direct method to add items and save immediately
+  const addItemAndSave = async (materialName, quantity = 1) => {
+    const matchedItem = wasteItems.find(item =>
+      item.item.toLowerCase() === materialName.toLowerCase()
+    );
+
+    if (!matchedItem) {
+      console.warn(`fail to match the material: ${materialName}`);
+      return false;
+    }
+
+    // First update counts
+    const newCounts = {
+      ...counts,
+      [matchedItem.id]: (counts[matchedItem.id] || 0) + quantity
+    };
+    localStorage.setItem('wasteCounts', JSON.stringify(newCounts));
+    setCounts(newCounts);
+
+    // Then immediately calculate and save all data
+    let newWeight = 0;
+    let newCount = 0;
+    let newCarbon = 0;
+
+    wasteItems.forEach(item => {
+      const count = Number(newCounts[item.id]) || 0;
+      const itemWeight = count * item.kg_per_item;
+      newCount += count;
+      newWeight += itemWeight;
+      newCarbon += itemWeight * item.kg_co2_per_kg_item;
+    });
+
+    const totalWeightAfterSave = totalWaste + newWeight;
+    const cycles = Math.floor(totalWeightAfterSave / 60);
+    const updatedTotalWaste = totalWeightAfterSave % 60;
+    const updatedWastebinCollected = wastebinCollected + cycles;
+    const updatedTotalCarbonEmission = totalCarbonEmission + newCarbon;
+
+    const updatedAccumulatedWeights = { ...accumulatedWeights };
+    wasteItems.forEach(item => {
+      const count = newCounts[item.id] || 0;
+      updatedAccumulatedWeights[item.id] = (updatedAccumulatedWeights[item.id] || 0) + (count * item.kg_per_item);
+    });
+
+    const resetCounts = Object.keys(newCounts).reduce((acc, key) => {
+      acc[key] = 0;
+      return acc;
+    }, {});
+    const updatedTotalAccumulatedWaste = totalAccumulatedWaste + newWeight;
+
+    // Update localStorage
+    localStorage.setItem('totalWaste', updatedTotalWaste.toString());
+    localStorage.setItem('totalCount', (totalCount + newCount).toString());
+    localStorage.setItem('accumulatedWeights', JSON.stringify(updatedAccumulatedWeights));
+    localStorage.setItem('wasteCounts', JSON.stringify(resetCounts));
+    localStorage.setItem('wastebinCollected', updatedWastebinCollected.toString());
+    localStorage.setItem('totalAccumulatedWaste', updatedTotalAccumulatedWaste.toString());
+    localStorage.setItem('totalCarbonEmission', updatedTotalCarbonEmission.toString());
+
+    // Update state
+    setWastebinCollected(updatedWastebinCollected);
+    setTotalWaste(updatedTotalWaste);
+    setTotalCount(totalCount + newCount);
+    setAccumulatedWeights(updatedAccumulatedWeights);
+    setCounts(resetCounts);
+    setHasUnsavedChanges(false);
+    setTotalAccumulatedWaste(updatedTotalAccumulatedWaste);
+    setTotalCarbonEmission(updatedTotalCarbonEmission);
+
+    // Save carbon emission to database
+    if (newCarbon > 0) {
+      await saveCarbonEmissionToDatabase(newCarbon);
+    }
+
+    // Show toast messages
+    if (cycles > 0) {
+      toast.success(`Awesome! You've planted ${cycles} new tree${cycles > 1 ? 's' : ''}! Progress: ${updatedTotalWaste.toFixed(1)}/60kg`);
+    }
+    toast.success(`Great job! You recycled: ${newCount} item${newCount > 1 ? 's' : ''}, totaling ${newWeight.toFixed(2)}kg`);
+
+    return true;
+  };
+
   const saveData = async () => {
     try {
       let newWeight = 0;
@@ -89,15 +260,16 @@ const useWasteData = () => {
 
       wasteItems.forEach(item => {
         const count = Number(counts[item.id]) || 0;
+        const itemWeight = count * item.kg_per_item;
         newCount += count;
-        newWeight += count * item.kg_per_item;
-        newCarbon += count * item.kg_co2_per_kg_item;
+        newWeight += itemWeight;
+        newCarbon += itemWeight * item.kg_co2_per_kg_item;
       });
 
       const totalWeightAfterSave = totalWaste + newWeight;
       const cycles = Math.floor(totalWeightAfterSave / 60);
       const updatedTotalWaste = totalWeightAfterSave % 60;
-      const updatedwastebinCollected = wastebinCollected + cycles;
+      const updatedWastebinCollected = wastebinCollected + cycles;
       const updatedTotalCarbonEmission = totalCarbonEmission + newCarbon;
 
       const updatedAccumulatedWeights = { ...accumulatedWeights };
@@ -113,31 +285,36 @@ const useWasteData = () => {
       const updatedTotalAccumulatedWaste = totalAccumulatedWaste + newWeight;
 
       localStorage.setItem('totalWaste', updatedTotalWaste.toString());
+      localStorage.setItem('totalCount', (totalCount + newCount).toString());
       localStorage.setItem('accumulatedWeights', JSON.stringify(updatedAccumulatedWeights));
       localStorage.setItem('wasteCounts', JSON.stringify(resetCounts));
-      localStorage.setItem('wastebinCollected', updatedwastebinCollected.toString());
+      localStorage.setItem('wastebinCollected', updatedWastebinCollected.toString());
       localStorage.setItem('totalAccumulatedWaste', updatedTotalAccumulatedWaste.toString());
       localStorage.setItem('totalCarbonEmission', updatedTotalCarbonEmission.toString());
 
-      setwastebinCollected(updatedwastebinCollected);
+      setWastebinCollected(updatedWastebinCollected);
       setTotalWaste(updatedTotalWaste);
+      setTotalCount(prev => prev + newCount);
       setAccumulatedWeights(updatedAccumulatedWeights);
       setCounts(resetCounts);
       setHasUnsavedChanges(false);
       setTotalAccumulatedWaste(updatedTotalAccumulatedWaste);
       setTotalCarbonEmission(updatedTotalCarbonEmission);
 
+      // Save carbon emission to database
+      if (newCarbon > 0) {
+        await saveCarbonEmissionToDatabase(newCarbon);
+      }
+
       if (cycles > 0) {
         toast.success(`Awesome! You've planted ${cycles} new tree${cycles > 1 ? 's' : ''}! Progress: ${updatedTotalWaste.toFixed(1)}/60kg`);
       }
-      toast.success(`Great job! You saved: ${newCount} item${newCount > 1 ? 's' : ''}, totaling ${newWeight.toFixed(2)}kg`);
+      toast.success(`Great job! You recycled: ${newCount} item${newCount > 1 ? 's' : ''}, totaling ${newWeight.toFixed(2)}kg`);
 
     } catch (error) {
-      totalAccumulatedWaste
       console.error('fail to save', error);
     }
   };
-
 
   const handleNameClick = () => setIsEditing(true);
   const handleNameSave = (e) => {
@@ -158,15 +335,22 @@ const useWasteData = () => {
     counts,
     accumulatedWeights,
     hasUnsavedChanges,
+    totalCount,
     wastebinCollected,
     totalAccumulatedWaste,
     totalCarbonEmission,
+    communityCarbonEmission,
+    setCounts,
     handleNameClick,
     handleNameSave,
     setUserName,
     incrementCount,
     decrementCount,
-    saveData
+    saveData,
+    incrementCountByMaterial,
+    addItemAndSave,
+    saveCarbonEmissionToDatabase,
+    fetchCommunityCarbonEmission
   };
 };
 

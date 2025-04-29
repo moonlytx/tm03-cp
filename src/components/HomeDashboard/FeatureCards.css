@@ -26,9 +26,9 @@
 }   
 
 .card .report-icon {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 1.5rem;
+  width: 140px;
+  height: 140px;
+  margin-bottom: -1em;
   background-image: url('../../assets/images/HomeDashboard/report.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -36,9 +36,9 @@
 }
 
 .card .identify-icon {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 1.5rem;
+  width: 140px;
+  height: 140px;
+  margin-bottom: -1rem;
   background-image: url('../../assets/images/HomeDashboard/camera.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -46,9 +46,9 @@
 }
 
 .card .map-icon {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 1.5rem;
+  width: 140px;
+  height: 140px;
+  margin-bottom: -1rem;
   background-image: url('../../assets/images/HomeDashboard/map.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -56,8 +56,8 @@
 }
 
 .card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  margin-bottom: 5rem;
 }
 
 .card p {

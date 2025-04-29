@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserProfile, StatsCards, ProgressBar, WasteCategories, AccumulatedWeights }
+import { UserProfile, StatsCards, ProgressBar, TreeProgress, AccumulatedWeights }
   from '../components/ReportDashboard';
 import ShareButton from '../components/ReportDashboard/ShareButton';
 import useWasteData from '../hooks/useWasteData';
@@ -37,7 +37,7 @@ const WasteDashboard = () => {
         <div className="content-container waste-container">
           <header className="waste-header">
             <h1>Point of You</h1>
-            <p>Keep track of your recycling efforts to save the planet.</p>
+            <p>Keep Track of Your Recycling Efforts to Save the Planet</p>
             {/* ShareButton positioned at the top right */}
             <ShareButton />
           </header>
@@ -65,7 +65,7 @@ const WasteDashboard = () => {
             </section>
 
             <section className="waste-categories">
-              <WasteCategories
+              <TreeProgress
                 wasteItems={wasteItems}
                 counts={counts}
                 progressPercentage={progressPercentage}
