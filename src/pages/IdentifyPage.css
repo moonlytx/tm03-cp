@@ -29,7 +29,8 @@
 }
 
 .waste-header p {
-  font-size: 1.1rem; 
+  font-size: 1.1rem;
+  color: #166534;
 }
 
 @media (max-width: 768px) {

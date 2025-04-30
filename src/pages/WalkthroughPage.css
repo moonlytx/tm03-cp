@@ -1,0 +1,106 @@
+/* WalkthroughPage.css */
+.container {
+  min-height: 100vh;
+  background-color: white;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+main {
+  padding: 1.5rem;
+  position: relative;
+  padding-bottom: 6rem;
+}
+
+.content-container {
+  max-width: 2000px;
+  margin: 0 auto;
+}
+
+/* Header styles */
+.recycling-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+}
+
+.recycling-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  width: 100%;
+  position: relative;
+}
+
+.recycling-header h1 {
+  color: var(--highlight-color);
+  margin-bottom: 1rem; 
+}
+
+.recycling-header p {
+  font-size: 1.1rem;
+  color: #166534;
+}
+
+/* Title section styles from ReportPage */
+.title-section {
+  margin-bottom: 1.5rem;
+}
+
+.main-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #166534;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: #166534;
+  margin: 0;
+}
+
+/* Back button styles */
+.back-button {
+  position: fixed;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  background-color: #13884c;
+  color: white;
+  font-weight: 700;
+  border-radius: 9999px;
+  padding: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.back-button:hover {
+  background-color: #0ec13b;
+  transform: translateY(-50%) scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .recycling-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .recycling-header p {
+    font-size: 1rem;
+  }
+
+  .back-button {
+    left: 15px;
+    padding: 10px;
+  }
+}

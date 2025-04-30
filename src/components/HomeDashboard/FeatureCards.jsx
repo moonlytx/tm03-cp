@@ -7,22 +7,22 @@ function FeatureCards() {
 
   return (
     <section className="feature-cards">
-      <div className="card" onClick={() => navigate('/report')}>
-        <div className="card-icon report-icon"></div>
-        <h3>Report</h3>
-        <p>Check your progress and your profile to see how much you have recycled.</p>
-      </div>
-      
-      <div className="card" onClick={() => navigate('/identify')}>
-        <div className="card-icon identify-icon"></div>
+      <div className="feat-card" onClick={() => navigate('/identify')}>
+        <div className="feat-card-icon identify-icon"></div>
         <h3>Identify</h3>
         <p>Need to know what is in front of you? We have a feature to help.</p>
       </div>
       
-      <div className="card" onClick={() => navigate('/map')}>
-        <div className="card-icon map-icon"></div>
+      <div className="feat-card" onClick={() => navigate('/map')}>
+        <div className="feat-card-icon map-icon"></div>
         <h3>Map</h3>
         <p>Locate your closest recycling center.</p>
+      </div>
+      
+      <div className="feat-card" onClick={() => navigate('/report')}>
+        <div className="feat-card-icon report-icon"></div>
+        <h3>Report</h3>
+        <p>Check your progress and your profile to see how much you have recycled.</p>
       </div>
     </section>
   );

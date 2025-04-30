@@ -5,7 +5,7 @@
   gap: 2rem;
 }
 
-.card {
+.feat-card {
   flex: 1;
   background-color: var(--card-bg);
   border-radius: 10px;
@@ -20,12 +20,12 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:hover {
+.feat-card:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }   
 
-.card .report-icon {
+.feat-card .report-icon {
   width: 140px;
   height: 140px;
   margin-bottom: -1em;
@@ -35,7 +35,7 @@
   background-position: center;
 }
 
-.card .identify-icon {
+.feat-card .identify-icon {
   width: 140px;
   height: 140px;
   margin-bottom: -1rem;
@@ -45,7 +45,7 @@
   background-position: center;
 }
 
-.card .map-icon {
+.feat-card .map-icon {
   width: 140px;
   height: 140px;
   margin-bottom: -1rem;
@@ -55,22 +55,22 @@
   background-position: center;
 }
 
-.card h3 {
+.feat-card h3 {
   font-size: 2rem;
   margin-bottom: 5rem;
 }
 
-.card p {
+.feat-card p {
   color: #666;
   line-height: 1.6;
 }
 
 @media (max-width: 768px) {
-  .feature-cards {
+  .feature-feat-cards {
     flex-direction: column;
   }
   
-  .card {
+  .feat-card {
     margin-bottom: 1.5rem;
   }
 }

@@ -8,8 +8,8 @@ function Hero() {
         <h1>Turn Waste into Hope<br />Start Recycling</h1>
         <p>
           Join us in making a difference — 
-          TRACK your impact, REDUCE waste, and HELP nature thrive.
-          All just by <span className="highlight">RECYCLING</span>.
+          <strong>TRACK</strong> your impact, <strong>REDUCE</strong> waste, and <strong>HELP</strong> nature thrive.
+          All just by <span className="hero-highlight"><strong>RECYCLING</strong></span>.
         </p>
       </div>
     </section>

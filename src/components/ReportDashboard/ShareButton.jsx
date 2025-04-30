@@ -23,10 +23,17 @@ const ShareButton = () => {
         useCORS: true,
         scale: 2, // Higher scale for better quality
       });
-
+      
+      // Get the user name from localStorage, or use 'user' as default
+      const userName = localStorage.getItem('userName') || 'user';
+      // Format the date as YYYY-MM-DD
+      const date = new Date().toISOString().slice(0, 10);
+      // Create the new file name with the CarbonPatrol prefix, user name, and date
+      const imageName = `Point-of-You_${userName}_${date}.db`;
+      
       // Create a download link
       const link = document.createElement('a');
-      link.download = `Point-of-You_${new Date().toISOString().split('T')[0]}.png`;
+      link.download = imageName;
       link.href = canvas.toDataURL('image/png');
       link.click();
       

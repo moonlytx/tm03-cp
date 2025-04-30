@@ -60,6 +60,7 @@ main {
 
 .waste-header p {
   font-size: 1.1rem; 
+  color: #166534;
 }
 
 /* Ensure content is not gathered in the middle */

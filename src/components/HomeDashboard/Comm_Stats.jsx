@@ -8,20 +8,20 @@ function Stats({ communityCarbon }) {
   const treesPlanted = communityCarbon ? Math.round(communityCarbon / 25).toLocaleString() : '0'
 
   return (
-    <section className="stats-highlight">
-      <div className="stats-text">
+    <section className="comm-stats-highlight">
+      <div className="comm-stats-text">
         <h2>Carbon Footprint Reduced by the Community</h2>
-        <div className="stat-number-container">
+        <div className="comm-stat-number-container">
         <Footprints size={55} color="seagreen" />    
-        <div className="stat-number">{formattedCarbon}</div>
+        <div className="comm-stat-number">{formattedCarbon}</div>
         <p className="units">g·CO₂e</p> 
         </div>
         <p className="disclaimer">* Reduced Greenhouse Gases Equivalent to Amount of Carbon Dioxide (CO₂) in Grams </p>
         
         <h2>Equivalent to Planting</h2>
-        <div className="stat-number-container">
+        <div className="comm-stat-number-container">
           <Trees size={55} color="seagreen" />    
-          <div className="stat-number">~{treesPlanted}</div>
+          <div className="comm-stat-number">~{treesPlanted}</div>
           <p className="units">Trees</p> 
         </div>
         <p>
@@ -31,7 +31,7 @@ function Stats({ communityCarbon }) {
           and make a <strong>positive impact on the planet</strong>.
         </p>
       </div>
-      <div className="stats-image">
+      <div className="comm-stats-image">
         <div className="tree-illustration"></div>
       </div>
     </section>

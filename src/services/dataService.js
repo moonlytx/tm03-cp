@@ -1,7 +1,4 @@
 // Helper functions for saving and loading data
-
-import { ArrowDownSquare, Axis3D } from "lucide-react";
-
 export const exportDataAsDB = () => {
   const data = {
     wasteCounts: localStorage.getItem('wasteCounts'),
