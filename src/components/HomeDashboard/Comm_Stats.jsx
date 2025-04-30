@@ -4,7 +4,7 @@ import './Comm_Stats.css';
 
 function Stats({ communityCarbon }) {
   // Formatting the carbon emission value
-  const formattedCarbon = communityCarbon ? Math.round(communityCarbon * 1000).toLocaleString() : '0';
+  const formattedCarbon = communityCarbon ? Number(communityCarbon.toFixed(2)).toLocaleString(): '0.00';
   const treesPlanted = communityCarbon ? Math.round(communityCarbon / 25).toLocaleString() : '0'
 
   return (
@@ -14,9 +14,9 @@ function Stats({ communityCarbon }) {
         <div className="comm-stat-number-container">
         <Footprints size={55} color="seagreen" />    
         <div className="comm-stat-number">{formattedCarbon}</div>
-        <p className="units">g·CO₂e</p> 
+        <p className="units">kg·CO₂e</p> 
         </div>
-        <p className="disclaimer">* Reduced Greenhouse Gases Equivalent to Amount of Carbon Dioxide (CO₂) in Grams </p>
+        <p className="disclaimer">* Reduced Greenhouse Gases Equivalent to Amount of Carbon Dioxide (CO₂) in Kilograms </p>
         
         <h2>Equivalent to Planting</h2>
         <div className="comm-stat-number-container">

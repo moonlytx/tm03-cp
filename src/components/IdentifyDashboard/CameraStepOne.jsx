@@ -233,7 +233,7 @@ function CameraStepOne({ onNext }) {
           className="start-button"
           disabled={loading}
         >
-          {loading ? "Processing..." : "Start"}
+          {loading ? "Scanning..." : "Start"}
         </button>
       ) : (
         <div className="camera-controls">

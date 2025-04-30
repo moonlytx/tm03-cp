@@ -195,10 +195,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
         <div className="detection-results green-background">
           {count > 0 ? (
             <>
-              <div className="detection-item">
-                <div className="detection-bullet">•</div>
-                <div>{isRecycled ? `${userQuantity} ${userQuantity === 1 ? 'Item' : 'Items'} recycled` : '1 Item detected'}</div>
-              </div>
+
 
               {materials.length > 0 && (
                 <div className="detection-item">
@@ -237,7 +234,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
         <div className="modal-overlay">
           <div className="modal-container">
             <div className="modal-header">
-              <h3 className="modal-title">Would you like to recycle this item?</h3>
+              <h3 className="modal-title">Do you want to proceed with recycling these items and earn points for your recycling journey?</h3>
               <button
                 onClick={handleSkipRecycle}
                 className="modal-close-button"
@@ -246,20 +243,18 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
               </button>
             </div>
 
-            <p>By recycling this {materials.length > 0 ? materials[0] : 'item'}, you can reduce waste and carbon emissions.</p>
-
             <div className="modal-actions">
               <button
                 onClick={handleSkipRecycle}
                 className="modal-button-secondary"
               >
-                Just Identify
+                Just Checking
               </button>
               <button
                 onClick={handleRecycleChoice}
                 className="modal-button-primary"
               >
-                Recycle & Save Resources
+                Recycle & Earn Points
               </button>
             </div>
           </div>
@@ -280,7 +275,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
               </button>
             </div>
 
-            <p>How many items of this type are you recycling?</p>
+            <p>How many {materials.length > 0 ? materials[0] : 'item'}(s) are you recycling?</p>
 
             <div>
               <input
@@ -290,7 +285,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
                 placeholder="Enter quantity"
                 className="quantity-input"
                 min="1"
-                onFocus={(e) => e.target.select()} // 输入框获得焦点时选中所有文本，方便替换
+                onFocus={(e) => e.target.select()} // Select all text in the input box when it gains focus, to make replacement easier
               />
               {errorMessage && (
                 <div className="error-message" style={{ color: 'red', fontSize: '0.875rem', marginTop: '0.5rem' }}>
@@ -300,8 +295,8 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
             </div>
 
             <div>
-              <p>You will recycle: <strong>{weightKg.toFixed(2)} kg</strong> waste</p>
-              <p>Carbon emissions saved: <strong>{carbonKg.toFixed(2)} kg CO₂</strong></p>
+              <p>You will be recycling: <strong>{weightKg.toFixed(2)} kg</strong> of {materials.length > 0 ? materials[0] : 'item'}(s)</p>
+              <p>Carbon emissions saved: <strong>{carbonKg.toFixed(2)} kg·CO₂e </strong></p>
             </div>
 
             <div className="quantity-actions">

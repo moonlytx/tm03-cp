@@ -54,6 +54,11 @@
 
 .start-button:hover {
   background-color: #86efac;
+  transform: translateY(-2px);
+}
+
+.start-button:active {
+  transform: translateY(0);
 }
 
 /* Unified frame for warnings and examples */
