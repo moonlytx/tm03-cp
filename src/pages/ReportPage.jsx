@@ -7,6 +7,7 @@ import useWasteData from '../hooks/useWasteData';
 import './ReportPage.css';
 
 const WasteDashboard = () => {
+  // Fetch required variables
   const {
     wasteItems,
     isLoading,
@@ -16,25 +17,22 @@ const WasteDashboard = () => {
     totalWaste,
     wastebinCollected,
     progressPercentage,
-    counts,
     accumulatedWeights,
     totalAccumulatedWaste,
     totalCarbonEmission,
-    hasUnsavedChanges,
     handleNameClick,
     handleNameSave,
     setUserName,
-    incrementCount,
-    decrementCount,
-    saveData,
-    // New handlers for save/load functionality
+    // Added for Save / Load Buttons
     handleSaveProgress,
     handleLoadProgress
   } = useWasteData();
 
+  // Error message if cannot fetch details from API
   if (isLoading) return <div className="loading">Loading waste categories...</div>;
   if (error) return <div className="error">Error loading waste categories: {error}</div>;
-
+  
+  // Set up ReportPage
   return (
     <div className="waste-app">
       <div className="container">
@@ -42,11 +40,10 @@ const WasteDashboard = () => {
           <header className="waste-header">
             <h1>Point of You</h1>
             <p>Keep Track of Your Recycling Efforts to Save the Planet</p>
-            {/* ShareButton positioned at the top right */}
             <ShareButton />
           </header>
-
           <main>
+            {/* Feed details fetched from storage */}
             <section className="profile-stats-container">
               <UserProfile
                 userName={userName}
@@ -60,26 +57,20 @@ const WasteDashboard = () => {
                 wastebinCollected={wastebinCollected}
               />
             </section>
-
+            {/* Constantly update progress bar */}
             <section className="progress-bar-container">
               <ProgressBar
                 progressPercentage={progressPercentage}
                 totalWaste={totalWaste}
               />
             </section>
-
+            {/* Update tree growth */}
             <section className="waste-categories">
               <TreeProgress
-                wasteItems={wasteItems}
-                counts={counts}
                 progressPercentage={progressPercentage}
-                incrementCount={incrementCount}
-                decrementCount={decrementCount}
-                saveData={saveData}
-                hasUnsavedChanges={hasUnsavedChanges}
               />
             </section>
-
+            {/* Print out accumulated weights */}
             <section className="accumulated-weights">
               <AccumulatedWeights
                 wasteItems={wasteItems}
@@ -87,8 +78,7 @@ const WasteDashboard = () => {
                 totalAccumulatedWaste={totalAccumulatedWaste}
               />
             </section>
-            
-            {/* SaveLoadButtons positioned at the bottom center */}
+            {/* Save / Load buttons positioned at the bottom center */}
             <div className="save-load-bottom-container">
               <SaveLoadButtons 
                 onSave={handleSaveProgress} 

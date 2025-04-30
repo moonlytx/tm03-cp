@@ -1,6 +1,8 @@
 import './Footer.css';
 
+// Citations at the bottom for all pages
 function Footer() {
+  // Citation details 
   const footerLinks = [
     {
       title: 'Hillman et al. (2015) Recycling Report',
@@ -55,6 +57,7 @@ function Footer() {
             </div>
           ))}
         </div>
+        {/* Little disclaimer at the bottom */}
         <div className="footer-bottom">
           <p>© 2025 Carbon Patrol. All rights reserved.</p>
         </div>

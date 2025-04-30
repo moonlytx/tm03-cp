@@ -1,3 +1,4 @@
+/* Main ReportPage styles */
 .container {
   min-height: 100vh;
   background-color: white;
@@ -7,28 +8,12 @@
 
 main {
   padding: 1.5rem;
-  position: relative; /* Add position relative for absolute positioning of child elements */
-  padding-bottom: 6rem; /* Add padding at bottom to make space for the buttons */
+  position: relative; 
+  padding-bottom: 6rem;
 }
 
-.title-section {
-  margin-bottom: 1.5rem;
-}
-
-.main-title {
-  font-size: 1.875rem;
-  font-weight: bold;
-  color: #166534;
-  margin-bottom: 0.25rem;
-}
-
-.subtitle {
-  color: #166534;
-  margin: 0;
-}
-
-.loading,
-.error {
+/* Formatting for loading and error messages */
+.loading {
   padding: 2rem;
   text-align: center;
   font-size: 1.25rem;
@@ -36,9 +21,13 @@ main {
 }
 
 .error {
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.25rem;
   color: #b91c1c;
 }
 
+/* Set margin and padding */
 .waste-container {
   display: flex;
   flex-direction: column;
@@ -46,11 +35,12 @@ main {
   padding-top: 2rem;
 }
 
+/* Header and sub-header styles */
 .waste-header {
   text-align: center;
   margin-bottom: 4rem; 
   width: 100%; 
-  position: relative; /* Added for positioning SaveButton */
+  position: relative; 
 }
 
 .waste-header h1 {
@@ -77,6 +67,7 @@ main {
   gap: 2rem; 
 }
 
+/* Proper placement of all components */
 .progress-bar-container {
   margin-bottom: 0.5rem;
 }
@@ -92,10 +83,10 @@ main {
 
 .accumulated-weights {
   margin-top: 4rem;
-  margin-bottom: 4rem; /* Add bottom margin for spacing before save/load buttons */
+  margin-bottom: 4rem; 
 }
 
-/* New styles for the save/load buttons container */
+/* Added save/load buttons container */
 .save-load-bottom-container {
   display: flex;
   justify-content: center;
@@ -104,24 +95,3 @@ main {
   margin-bottom: 2rem;
 }
 
-@media (max-width: 768px) {
-  .profile-stats-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .waste-header h1 {
-    font-size: 2rem;
-  }
-  
-  /* Make the share button responsive */
-  .share-button-container {
-    position: static;
-    margin-top: 1rem;
-  }
-  
-  /* Make sure the buttons still look good on mobile */
-  .save-load-bottom-container {
-    margin-top: 1.5rem;
-  }
-}

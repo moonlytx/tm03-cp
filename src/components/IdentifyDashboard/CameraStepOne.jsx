@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Camera, ArrowRight, Check, X, Upload, AlertCircle, RefreshCw } from 'lucide-react';
+import { Camera, Check, X, Upload, AlertCircle, RefreshCw, AlertTriangle } from 'lucide-react';
 import blurry_example from '../../assets/images/IdentifyDashboard/blurry_example.png';
 import clear_example from '../../assets/images/IdentifyDashboard/clear_example.png';
 import camera from '../../assets/images/IdentifyDashboard/camera.png';
-import { AlertTriangle } from 'lucide-react';
 import './CameraStepOne.css';
 
 function CameraStepOne({ onNext }) {
@@ -205,7 +204,7 @@ function CameraStepOne({ onNext }) {
 
       <h1 className="step-title">Step 1: Upload</h1>
       <p className="step-description">
-        Click Start Camera and make sure to allow permission for the browser to use
+        Click on "Start" and make sure to allow permission for camera
       </p>
 
       {/* Camera or image preview area */}
@@ -284,7 +283,7 @@ function CameraStepOne({ onNext }) {
             }}
             className="option-button"
           >
-            <Upload size={20} /> Upload Image
+            <Upload size={18} /> Upload Image
           </button>
           <button
             onClick={() => {
@@ -294,51 +293,91 @@ function CameraStepOne({ onNext }) {
             }}
             className="option-button"
           >
-            <Camera size={20} /> Take Photo
+            <Camera size={18} /> Take Photo
           </button>
         </div>
       )}
 
-      <p className="camera-note">
-        <AlertTriangle className="note-icon" size={16} />
-        Note: Preferably one item at a time for better result
-      </p>
-
-      <div className="examples-section">
+      {/* Unified Warning and Examples Frame */}
+      <div className="unified-frame">
+        {/* Warning Notes Section */}
+        <div className="warning-notes">
+          {/* First Warning Note */}
+          <div className="warning-note">
+            <AlertTriangle size={40} className="warning-icon" />
+            <span className="warning-text">
+              Note: Preferably one item at a time for better result
+            </span>
+          </div>
+          
+          {/* Second Warning Note */}
+          <div className="warning-note">
+            <AlertTriangle size={40} className="warning-icon" />
+            <span className="warning-text">
+              Ensure that the scanned image is clear and visible
+            </span>
+          </div>
+        </div>
+        
+        {/* Examples Section */}
         <h3 className="examples-title">Example</h3>
-
+        
         <div className="examples-column">
+          {/* Clear Example */}
           <div className="example-item">
             <p className="example-label">Clear</p>
-            <div className="example-image-container">
+            <div className="example-image-container" style={{ position: 'relative' }}>
               <img
                 src={clear_example}
                 alt="Clear example"
                 className="example-image"
               />
+              <div style={{
+                position: 'absolute',
+                bottom: '15px',
+                right: '15px',
+                backgroundColor: '#22c55e',
+                borderRadius: '50%',
+                width: '50px',
+                height: '50px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+              }}>
+                <Check size={30} color="white" />
+              </div>
             </div>
           </div>
 
+          {/* Blurry Example */}
           <div className="example-item">
             <p className="example-label">Blurry</p>
-            <div className="example-image-container">
+            <div className="example-image-container" style={{ position: 'relative' }}>
               <img
                 src={blurry_example}
                 alt="Blurry example"
                 className="example-image"
               />
+              <div style={{
+                position: 'absolute',
+                bottom: '15px',
+                right: '15px',
+                backgroundColor: '#ef4444',
+                borderRadius: '50%',
+                width: '50px',
+                height: '50px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+              }}>
+                <X size={30} color="white" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* <button
-        onClick={() => onNext({})}
-        className="next-button"
-        aria-label="Next step"
-      >
-        <ArrowRight size={24} />
-      </button> */}
     </div>
   );
 }

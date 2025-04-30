@@ -1,3 +1,4 @@
+/* Main citation footer styles */
 .footer {
   background-color: #F0FFF0; 
   color: black;
@@ -14,6 +15,7 @@
   padding: 0 40px;
 }
 
+/* Set up citation links */
 .footer-links {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -21,6 +23,7 @@
   margin-bottom: 30px;
 }
 
+/* Build column styles */
 .footer-column {
   display: flex;
   flex-direction: column;
@@ -38,6 +41,7 @@
   padding-bottom: 8px;
 }
 
+/* Set formatting for buttons and when hovered over */
 .footer-link-title {
   color: darkseagreen;
   margin-bottom: 10px;
@@ -53,6 +57,7 @@
   text-decoration: none;
 }
 
+/* Formatting for disclaimer */
 .footer-bottom {
   text-align: center;
   padding-top: 20px;
@@ -60,23 +65,4 @@
   margin-top: 10px;
   color: seagreen;
   font-size: 14px;
-}
-
-@media (max-width: 768px) {
-  .footer-content {
-    padding: 0 20px;
-  }
-  
-  .footer-links {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 20px;
-  }
-  
-  .footer-category {
-    font-size: 16px;
-  }
-  
-  .footer-link-title {
-    font-size: 14px;
-  }
 }

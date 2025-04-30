@@ -27,30 +27,6 @@
   object-fit: contain;
 }
 
-/* Previous button*/
-.prev-button {
-  position: fixed;
-  top: 50%;
-  left: 30px;
-  transform: translateY(-50%);
-  background-color: #13884c;
-  color: black;
-  font-weight: 700;
-  border-radius: 9999px;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
-
-.prev-button:hover {
-  background-color: #0ec13b;
-}
-
 /* Detection results styling */
 .detection-results {
   background-color: #f9fafb;
@@ -126,6 +102,29 @@
   margin: 8px 0;
   font-size: 16px;
   color: #6b7280;
+}
+
+/* Scan Another Item button */
+.scan-another-button {
+  background-color: #bbf7d0;
+  color: #166534;
+  font-weight: 600;
+  padding: 10px 30px;
+  border-radius: 9999px;
+  font-size: 1.1rem;
+  margin: 1.5rem 0;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.scan-another-button:hover {
+  background-color: #86efac;
+  transform: translateY(-2px);
+}
+
+.scan-another-button:active {
+  transform: translateY(0);
 }
 
 /* Dialog styles */
@@ -212,11 +211,4 @@
 
 .green-background {
   background-color: #ecfdf5 !important;
-}
-
-@media (max-width: 640px) {
-  .prev-button {
-    left: 15px;
-    padding: 8px;
-  }
 }

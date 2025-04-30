@@ -1,3 +1,4 @@
+/* Main navigation bar styles */
 .navbar {
   display: flex;
   align-items: center;
@@ -21,6 +22,7 @@
   padding-right: 2rem;
 }
 
+/* Logo formatting */
 .logo-image {
   height: 80px;
   width: auto;
@@ -29,43 +31,26 @@
 .logo {
   display: flex;
   align-items: center;
+  
 }
 
-/* Move navigation links to the right */
+/* Ensure navigation links are aligned to the right */
 .nav-links {
   display: flex;
   gap: 2rem; 
   justify-content: flex-end; 
 }
 
+/* Set formatting for buttons and when hovered over */
 .nav-link {
-  color: seagreen;
+  color: darkseagreen;
   font-weight: 600;
   font-size: 1.3rem;
+  transition: transform 0.2s ease, color 0.2s ease;
 }   
 
 .nav-link:hover {
-  color: #166534;
+  color: seagreen;
+  transform: translateX(5px);
+  text-decoration: none;
 }   
-
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    padding: 1rem;
-  }
-  
-  .navbar-content {
-    flex-direction: column;
-  }
-  
-  .nav-links {
-    margin-top: 2rem;
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .logo {
-    width: 100%;
-    justify-content: center;
-  }
-}

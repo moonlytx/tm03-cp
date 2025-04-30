@@ -393,7 +393,6 @@ const useWasteData = () => {
     addItemAndSave,
     saveCarbonEmissionToDatabase,
     fetchCommunityCarbonEmission,
-    // New functions
     handleSaveProgress,
     handleLoadProgress
   };

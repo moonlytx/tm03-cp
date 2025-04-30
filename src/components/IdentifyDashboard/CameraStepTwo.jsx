@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, ArrowLeft, X, CheckCircle, Circle, Recycle } from 'lucide-react';
+import { CheckCircle, Circle, Recycle, X } from 'lucide-react';
 import './CameraStepOne.css';
 import './CameraStepTwo.css';
 import useWasteData from '../../hooks/useWasteData';
 
-function CameraStepTwo({ onNext, onPrevious, capturedData, onLearnMore, dialogAlreadyShown = false, savedRecycleStatus = false,
+function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = false, savedRecycleStatus = false,
   savedQuantity = 1 }) {
   // Use state to track if dialogs have been shown
   const [hasShownDialogs, setHasShownDialogs] = useState(dialogAlreadyShown);
@@ -12,7 +12,7 @@ function CameraStepTwo({ onNext, onPrevious, capturedData, onLearnMore, dialogAl
   // State for recycling dialogs
   const [showChoiceDialog, setShowChoiceDialog] = useState(false);
   const [showQuantityDialog, setShowQuantityDialog] = useState(false);
-  const [itemQuantity, setItemQuantity] = useState('1'); // 默认值设为"1"
+  const [itemQuantity, setItemQuantity] = useState('1'); // Set the default value to "1"
   const [isRecycled, setIsRecycled] = useState(savedRecycleStatus);
   const [userQuantity, setUserQuantity] = useState(savedQuantity);
   const [errorMessage, setErrorMessage] = useState('');
@@ -78,11 +78,11 @@ function CameraStepTwo({ onNext, onPrevious, capturedData, onLearnMore, dialogAl
     }
   }, [count, hasShownDialogs]);
 
-  // 打开数量输入对话框时，重置itemQuantity为默认值"1"和错误消息
+  // When opening the quantity input dialog, reset itemQuantity to the default value "1" and clear any error messages
   const handleRecycleChoice = () => {
     setShowChoiceDialog(false);
-    setItemQuantity('1'); // 重置为默认值
-    setErrorMessage(''); // 清除任何错误消息
+    setItemQuantity('1'); // Reset to default value
+    setErrorMessage(''); // Clear any error messages
     setShowQuantityDialog(true);
   };
 
@@ -97,7 +97,7 @@ function CameraStepTwo({ onNext, onPrevious, capturedData, onLearnMore, dialogAl
   // Handle input change with validation
   const handleQuantityChange = (e) => {
     const value = e.target.value;
-    // 允许为空或正整数
+    // Allow empty or positive integers
     if (value === '' || /^\d+$/.test(value)) {
       setItemQuantity(value);
       setErrorMessage('');
@@ -140,6 +140,13 @@ function CameraStepTwo({ onNext, onPrevious, capturedData, onLearnMore, dialogAl
     });
   };
 
+  // Handle scan another item click
+  const handleScanAnother = () => {
+    if (onReset) {
+      onReset();
+    }
+  };
+
   // Get current material name
   const materialName = materials.length > 0 ? materials[0] : '';
 
@@ -151,7 +158,7 @@ function CameraStepTwo({ onNext, onPrevious, capturedData, onLearnMore, dialogAl
     <div className="camera-interface">
       <h1 className="step-title">Step 2: Analysis</h1>
       <p className="step-description">
-        We analyzed your image and here are the results
+        Here are the results!
       </p>
 
       {/* Item preview */}
@@ -219,34 +226,10 @@ function CameraStepTwo({ onNext, onPrevious, capturedData, onLearnMore, dialogAl
           )}
         </div>
       </div>
-      {/* More details link */}
-      <a href="#"
-        className="more-details-link"
-        onClick={(e) => {
-          e.preventDefault(); // Prevent default link behavior
-          if (typeof onLearnMore === 'function') {
-            onLearnMore();
-          }
-        }}
-      >
-        Learn more about how to recycle
-      </a>
 
-      {/* Navigation buttons */}
-      <button
-        onClick={handleNextStep}
-        className="next-button"
-        aria-label="Next step"
-      >
-        <ArrowRight size={24} />
-      </button>
-
-      <button
-        onClick={onPrevious}
-        className="prev-button"
-        aria-label="Previous step"
-      >
-        <ArrowLeft size={24} />
+      {/* Scan Another Item button */}
+      <button onClick={handleScanAnother} className="scan-another-button">
+        Scan Another Item
       </button>
 
       {/* Choice dialog modal */}

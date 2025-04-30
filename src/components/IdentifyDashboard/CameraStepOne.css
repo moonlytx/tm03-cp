@@ -33,8 +33,6 @@
   overflow: hidden;
 }
 
-
-
 .camera-icon {
   width: 190px;
   height: 130px;
@@ -58,56 +56,65 @@
   background-color: #86efac;
 }
 
-.camera-note {
-  color: #6b7280;
-  font-size: 0.9rem;
-  margin: 1rem 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: #f8fafc;
+/* Unified frame for warnings and examples */
+.unified-frame {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #f8fafc;
   border-radius: 8px;
-  border-left: 3px solid #f59e0b;
+  border-left: 4px solid #f59e0b;
+  padding: 24px;
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
-.note-icon {
+.warning-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.warning-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.warning-icon {
   color: #d97706;
   flex-shrink: 0;
 }
 
-.examples-section {
-  width: 100%;
-  margin-top: 2rem;
+.warning-text {
+  color: #6b7280;
+  font-size: 1.25rem; 
+  margin-top: 0.2rem;
 }
 
 .examples-title {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: 700;
   text-align: center;
   margin-bottom: 1rem;
-
 }
 
-/* 修改示例部分的样式 */
+/* Example section styles */
 .examples-column {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-
   gap: 80px;
 }
 
-
 .example-label {
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   font-weight: 500;
   color: #4b5563;
 }
 
 .example-image-container {
   position: relative;
-
   overflow: hidden;
   width: 100%;
   max-width: 300px;
@@ -119,6 +126,72 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/* Camera controls styles */
+.camera-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.capture-button,
+.cancel-button,
+.confirm-button,
+.retry-button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.capture-button {
+  background-color: #bbf7d0;
+  color: #166534;
+}
+
+.cancel-button,
+.retry-button {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.confirm-button {
+  background-color: #bbf7d0;
+  color: #166534;
+}
+
+/* Options menu styles */
+.options-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.option-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: #bbf7d0;
+  color: #166534;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 200px;
+
+}
+
+.option-button:hover {
+  background-color: #166534;
+  color: #bbf7d0;
+  border: none;
 }
 
 .next-button {
@@ -142,27 +215,4 @@
 
 .next-button:hover {
   background-color: #0ec13b;
-}
-
-@media (max-width: 640px) {
-  .next-button {
-    right: 15px;
-    padding: 8px;
-  }
-}
-
-@media (max-width: 640px) {
-  .examples-column {
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  .example-item {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .example-image-container {
-    max-width: 100%;
-  }
 }

@@ -8,13 +8,16 @@ import Navbar from './components/Main/Navbar';
 import Footer from './components/Main/Footer';
 import { ToastContainer } from 'react-toastify';
 
+// Main function to render all components
 function App() {
   return (
     <Router>
       <div className="app-wrapper">
+        {/* Ensure navigation bar is on every page */}
         <Navbar />
         
         <div className="page-wrapper">
+          {/* Properly set routes to pages */}
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/walkthrough" element={<Walkthrough />} />
@@ -25,6 +28,7 @@ function App() {
         </div>
         {/* Control Duration of pop up message */}
         <ToastContainer position="top-center" autoClose={5000} />
+        {/* Ensure citation details is on every page */}
         <Footer /> 
       </div>
     </Router>

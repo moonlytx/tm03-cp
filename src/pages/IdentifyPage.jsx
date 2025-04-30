@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './IdentifyPage.css';
-import { toast } from 'react-toastify';
-import useWasteData from '../hooks/useWasteData';
+
 import CameraStepOne from '../components/IdentifyDashboard/CameraStepOne';
 import CameraStepTwo from '../components/IdentifyDashboard/CameraStepTwo';
-import RecyclingSteps from '../components/IdentifyDashboard/RecyclingSteps';
 
 function IdentifyPage() {
+  // Set required variables
   const [currentStep, setCurrentStep] = useState(1);
   const [capturedData, setCapturedData] = useState(null);
-  const [showRecyclingSteps, setShowRecyclingSteps] = useState(false);
-  const [localCounts, setLocalCounts] = useState({});
   const [dialogShown, setDialogShown] = useState(false);
   const [recycleStatus, setRecycleStatus] = useState(false);
   const [recycleQuantity, setRecycleQuantity] = useState(1);
-
-  // 调试输出
+  const [fadeAnimation, setFadeAnimation] = useState('');
+  
+  // Handle obtained data and images
   useEffect(() => {
     console.log("Current dialogShown state:", dialogShown);
   }, [dialogShown]);
@@ -23,7 +21,21 @@ function IdentifyPage() {
   const handleFirstStepComplete = (data) => {
     console.log("Data received from CameraInterface:", data);
     setCapturedData(data);
-    setCurrentStep(2);
+    
+    // Add fade-out animation and then switch to step 2
+    setFadeAnimation('fade-out');
+    
+    setTimeout(() => {
+      setCurrentStep(2);
+      // Reset the animation class after changing steps
+      setTimeout(() => {
+        setFadeAnimation('fade-in');
+        setTimeout(() => {
+          setFadeAnimation('');
+        }, 500);
+      }, 50);
+    }, 500);
+    
     setDialogShown(false);
   };
 
@@ -35,53 +47,56 @@ function IdentifyPage() {
     if (data.dialogShown) {
       setDialogShown(true);
     }
-
-    setShowRecyclingSteps(true);
   };
 
-  const handlePrevious = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const handleRecyclingStepsBack = () => {
-    setShowRecyclingSteps(false);
+  const handleReset = () => {
+    // Add fade-out animation and then switch back to step 1
+    setFadeAnimation('fade-out');
+    
+    setTimeout(() => {
+      setCurrentStep(1);
+      setCapturedData(null);
+      setDialogShown(false);
+      
+      // Reset the animation class after changing steps
+      setTimeout(() => {
+        setFadeAnimation('fade-in');
+        setTimeout(() => {
+          setFadeAnimation('');
+        }, 500);
+      }, 50);
+    }, 500);
   };
 
   const handleLearnMore = () => {
     setDialogShown(true);
-    setShowRecyclingSteps(true);
   };
-
+  
+  // Set up IdentifyPage
   return (
     <div className="waste-app">
       <div className="content-container identify-container">
-      <header className="waste-header">
+        <header className="waste-header">
           <h1>Waste Type Identification</h1>
           <p>Computer Vision System for Waste Type Identification</p>
         </header>
         
-        {showRecyclingSteps ? (
-          <RecyclingSteps onBack={handleRecyclingStepsBack} />
-        ) : (
-          <>
-            {currentStep === 1 && (
-              <CameraStepOne onNext={handleFirstStepComplete} />
-            )}
-            {currentStep === 2 && (
-              <CameraStepTwo
-                capturedData={capturedData}
-                onNext={handleStepTwoComplete}
-                onPrevious={handlePrevious}
-                onLearnMore={handleLearnMore}
-                dialogAlreadyShown={dialogShown}
-                savedRecycleStatus={recycleStatus}
-                savedQuantity={recycleQuantity}
-              />
-            )}
-          </>
-        )}
+        <div className={`step-container ${fadeAnimation}`}>
+          {currentStep === 1 && (
+            <CameraStepOne onNext={handleFirstStepComplete} />
+          )}
+          {currentStep === 2 && (
+            <CameraStepTwo
+              capturedData={capturedData}
+              onNext={handleStepTwoComplete}
+              onReset={handleReset}
+              onLearnMore={handleLearnMore}
+              dialogAlreadyShown={dialogShown}
+              savedRecycleStatus={recycleStatus}
+              savedQuantity={recycleQuantity}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
