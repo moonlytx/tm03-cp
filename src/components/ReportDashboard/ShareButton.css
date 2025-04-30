@@ -6,7 +6,7 @@
 }
 
 .share-button {
-  background-color: var(--highlight-color);
+  background-color: #16a34a; /* green-600 */
   color: white;
   border: none;
   border-radius: 0.375rem;
@@ -21,7 +21,7 @@
 }
 
 .share-button:hover {
-  background-color: #216e42; /* Darker green for hover state */
+  background-color: #15803d; /* green-700 */
 }
 
 .share-button:disabled {

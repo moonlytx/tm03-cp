@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { exportDataAsDB, importDataFromDB } from '../services/dataService';
 
 const useWasteData = () => {
   // All state hooks must be called unconditionally at the top level
@@ -324,7 +325,48 @@ const useWasteData = () => {
     }
   };
 
+  const handleSaveProgress = () => {
+    try {
+      const success = exportDataAsDB();
+      if (success) {
+        toast.success('Progress saved successfully! File downloaded to your computer.');
+      }
+    } catch (error) {
+      console.error('Failed to save progress:', error);
+      toast.error('Failed to save progress. Please try again.');
+    }
+  };
+
+  const handleLoadProgress = async (file) => {
+    try {
+      const result = await importDataFromDB(file);
+      
+      if (result.success) {
+        // Refresh all state values from localStorage
+        const savedCounts = localStorage.getItem('wasteCounts');
+        setCounts(savedCounts ? JSON.parse(savedCounts) : {});
+        
+        const savedWeights = localStorage.getItem('accumulatedWeights');
+        setAccumulatedWeights(savedWeights ? JSON.parse(savedWeights) : {});
+        
+        setUserName(localStorage.getItem('userName') || 'Anonymous');
+        setTotalCount(parseInt(localStorage.getItem('totalCount') || '0'));
+        setWastebinCollected(parseInt(localStorage.getItem('wastebinCollected')) || 0);
+        setTotalWaste(parseFloat(localStorage.getItem('totalWaste') || '0'));
+        setTotalAccumulatedWaste(parseFloat(localStorage.getItem('totalAccumulatedWaste') || '0'));
+        setTotalCarbonEmission(parseFloat(localStorage.getItem('totalCarbonEmission') || '0'));
+        
+        toast.success('Progress loaded successfully!');
+      }
+    } catch (error) {
+      console.error('Failed to load progress:', error);
+      toast.error(`Failed to load progress: ${error.message}`);
+    }
+  };
+
+  // Include new functions in the return object
   return {
+    // All existing returned values
     wasteItems,
     isLoading,
     error,
@@ -350,7 +392,10 @@ const useWasteData = () => {
     incrementCountByMaterial,
     addItemAndSave,
     saveCarbonEmissionToDatabase,
-    fetchCommunityCarbonEmission
+    fetchCommunityCarbonEmission,
+    // New functions
+    handleSaveProgress,
+    handleLoadProgress
   };
 };
 

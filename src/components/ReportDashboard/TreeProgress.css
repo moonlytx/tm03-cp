@@ -24,7 +24,7 @@
 }
 
 .tree-image {
-  max-width: 350px;
+  max-width: 400px;
   height: auto;
   width: 100%;
   object-fit: contain;
@@ -36,7 +36,7 @@
   max-width: 200px;
 }
 
-.submit-button {
+/* .submit-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,7 +65,7 @@
 
 .submit-button:disabled:hover {
   background-color: #d1d5db;
-}
+} */
 
 @media (max-width: 768px) {
   .tree-section {

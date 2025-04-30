@@ -26,7 +26,7 @@ const ShareButton = () => {
 
       // Create a download link
       const link = document.createElement('a');
-      link.download = `point-of-you-dashboard-${new Date().toISOString().split('T')[0]}.png`;
+      link.download = `Point-of-You_${new Date().toISOString().split('T')[0]}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
       

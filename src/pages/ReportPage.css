@@ -5,9 +5,10 @@
   padding-right: 3rem;
 }
 
-/* Main Content */
 main {
   padding: 1.5rem;
+  position: relative; /* Add position relative for absolute positioning of child elements */
+  padding-bottom: 6rem; /* Add padding at bottom to make space for the buttons */
 }
 
 .title-section {
@@ -37,7 +38,6 @@ main {
 .error {
   color: #b91c1c;
 }
-
 
 .waste-container {
   display: flex;
@@ -91,6 +91,16 @@ main {
 
 .accumulated-weights {
   margin-top: 4rem;
+  margin-bottom: 4rem; /* Add bottom margin for spacing before save/load buttons */
+}
+
+/* New styles for the save/load buttons container */
+.save-load-bottom-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 @media (max-width: 768px) {
@@ -108,11 +118,9 @@ main {
     position: static;
     margin-top: 1rem;
   }
-}
-
-.waste-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 2rem;
+  
+  /* Make sure the buttons still look good on mobile */
+  .save-load-bottom-container {
+    margin-top: 1.5rem;
+  }
 }

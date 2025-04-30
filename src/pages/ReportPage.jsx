@@ -1,7 +1,8 @@
 import React from 'react';
 import { UserProfile, StatsCards, ProgressBar, TreeProgress, AccumulatedWeights }
-  from '../components/ReportDashboard';
+from '../components/ReportDashboard';
 import ShareButton from '../components/ReportDashboard/ShareButton';
+import SaveLoadButtons from '../components/ReportDashboard/SaveLoadButtons';
 import useWasteData from '../hooks/useWasteData';
 import './ReportPage.css';
 
@@ -25,7 +26,10 @@ const WasteDashboard = () => {
     setUserName,
     incrementCount,
     decrementCount,
-    saveData
+    saveData,
+    // New handlers for save/load functionality
+    handleSaveProgress,
+    handleLoadProgress
   } = useWasteData();
 
   if (isLoading) return <div className="loading">Loading waste categories...</div>;
@@ -83,6 +87,14 @@ const WasteDashboard = () => {
                 totalAccumulatedWaste={totalAccumulatedWaste}
               />
             </section>
+            
+            {/* SaveLoadButtons positioned at the bottom center */}
+            <div className="save-load-bottom-container">
+              <SaveLoadButtons 
+                onSave={handleSaveProgress} 
+                onLoad={handleLoadProgress} 
+              />
+            </div>
           </main>
         </div>
       </div>
