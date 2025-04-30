@@ -23,9 +23,14 @@ const AccumulatedWeights = ({ wasteItems, accumulatedWeights, totalAccumulatedWa
             </div>
             <span className="weight-item-name">{item.item}</span>
           </div>
-          <span className="weight-item-value">
-            {(accumulatedWeights[item.id] || 0).toFixed(2)} kg
-          </span>
+          <div className="weight-item-content">
+            <span className="weight-item-value">
+              {(accumulatedWeights[item.id] || 0).toFixed(2)} kg
+            </span>
+            <div className="weight-item-details">
+              <small>{item.kg_per_item} kg/item • {item.kg_co2_per_kg_item} kg CO2/kg</small>
+            </div>
+          </div>
         </div>
       ))}
     </div>

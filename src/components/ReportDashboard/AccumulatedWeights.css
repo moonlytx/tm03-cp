@@ -51,9 +51,21 @@
   color: #14532d;
 }
 
+.weight-item-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 .weight-item-value {
   font-weight: bold;
   color: #14532d;
+}
+
+.weight-item-details {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: #4b5563;
 }
 
 .total-accumulated {

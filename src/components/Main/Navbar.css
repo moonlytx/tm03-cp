@@ -44,6 +44,10 @@
   font-size: 1.3rem;
 }   
 
+.nav-link:hover {
+  color: #166534;
+}   
+
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
