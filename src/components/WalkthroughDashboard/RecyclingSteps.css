@@ -66,22 +66,3 @@
   color: #166534;
   background-color: rgba(0, 0, 0, 0.1);
 }
-
-@media (max-width: 768px) {
-  .recycling-steps-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .recycling-step-card {
-    min-height: 180px;
-  }
-
-  .recycling-step-title-list {
-    font-size: 2rem;
-  }
-
-  .recycling-step-description {
-    font-size: 1.1rem;
-  }
-}

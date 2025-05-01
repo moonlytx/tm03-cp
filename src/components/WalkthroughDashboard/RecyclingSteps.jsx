@@ -44,7 +44,7 @@ function RecyclingSteps() {
         <div className="recycling-step-card">
           <h3 className="recycling-step-title-list">BONUS</h3>
           <p className="recycling-step-description">
-            Track your <Link to="/report" className="recycling-step-highlight">PERSONAL EFFORTS</Link> and <Link to="/" className="recycling-step-highlight">COMMUNITY EFFORTS</Link> the as you continue recycling.
+            Track and view your <Link to="/report" className="recycling-step-highlight">PERSONAL EFFORTS</Link> as well as the <Link to="/" className="recycling-step-highlight">COMMUNITY EFFORTS</Link> the as you continue recycling.
           </p>
         </div>
       </div>

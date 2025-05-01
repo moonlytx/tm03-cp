@@ -61,17 +61,3 @@
   background-position: center;
 }
 
-@media (max-width: 768px) {
-  .comm-stats-highlight {
-    flex-direction: column;
-  }
-
-  .comm-stats-text {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  .comm-stat-number-container {
-    align-items: center;
-  }
-}
