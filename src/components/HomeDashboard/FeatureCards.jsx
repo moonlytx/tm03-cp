@@ -10,7 +10,7 @@ function FeatureCards() {
       <div className="feat-card" onClick={() => navigate('/identify')}>
         <div className="feat-card-icon identify-icon"></div>
         <h3>Identify</h3>
-        <p>Need to know what is in front of you? We have a feature to help.</p>
+        <p>Need help identifying your recyclable items? We got you covered!</p>
       </div>
       
       <div className="feat-card" onClick={() => navigate('/map')}>
@@ -22,7 +22,7 @@ function FeatureCards() {
       <div className="feat-card" onClick={() => navigate('/report')}>
         <div className="feat-card-icon report-icon"></div>
         <h3>Report</h3>
-        <p>Check your progress and your profile to see how much you have recycled.</p>
+        <p>Track your contributions and the progress of your recycling efforts</p>
       </div>
     </section>
   );

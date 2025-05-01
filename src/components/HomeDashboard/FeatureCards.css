@@ -57,20 +57,13 @@
 
 .feat-card h3 {
   font-size: 2rem;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
 }
 
 .feat-card p {
   color: #666;
   line-height: 1.6;
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
 }
 
-@media (max-width: 768px) {
-  .feature-feat-cards {
-    flex-direction: column;
-  }
-  
-  .feat-card {
-    margin-bottom: 1.5rem;
-  }
-}

@@ -143,7 +143,7 @@ const useWasteData = () => {
     );
 
     if (!matchedItem) {
-      console.warn(`未找到匹配的材料: ${materialName}`);
+      console.warn(`No matching materials found.: ${materialName}`);
       return false;
     }
 

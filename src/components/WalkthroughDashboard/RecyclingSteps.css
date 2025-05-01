@@ -50,7 +50,7 @@
 .recycling-step-description {
   color: #166534;
   font-size: 1.3rem;
-  line-height: 2; /* Fixed from line-height: 70 */
+  line-height: 2; 
 }
 
 .recycling-step-highlight {

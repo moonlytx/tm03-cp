@@ -29,8 +29,6 @@ const getTreeImage = (progress) => {
 
 const TreeProgress = ({
   progressPercentage,
-  saveData,
-  hasUnsavedChanges
 }) => (
   <div className="tree-progress-container">
     <div className="tree-container">

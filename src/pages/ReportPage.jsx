@@ -39,7 +39,7 @@ const WasteDashboard = () => {
         <div className="content-container waste-container">
           <header className="waste-header">
             <h1>Point of You</h1>
-            <p>Keep Track of Your Recycling Efforts to Save the Planet</p>
+            <p>Keep Track of Your Contributions in Saving the Planet</p>
             <ShareButton />
           </header>
           <main>

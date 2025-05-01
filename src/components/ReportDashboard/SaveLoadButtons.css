@@ -24,7 +24,7 @@
 }
 
 .save-button:hover {
-  background-color: #216e42; /* Darker green for hover state */
+  background-color: #216e42; 
 }
 
 .load-button {
@@ -32,14 +32,13 @@
 }
 
 .load-button:hover {
-  background-color: #216e42; /* Darker green for hover state */
+  background-color: #216e42;
 }
 
 .file-input {
   display: none;
 }
 
-/* Match icon styling from ShareButton */
 .save-button svg,
 .load-button svg {
   width: 18px;
