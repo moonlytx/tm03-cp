@@ -22,3 +22,101 @@
   color: var(--primary-green);
   font-weight: bold;
 }
+
+/* Malaysia stats styling */
+.malaysia-stats {
+  max-width: 100%;
+  margin: 3rem auto 1rem;
+  text-align: left;
+}
+
+.malaysia-stats h2 {
+  font-size: 1.75rem;
+  color: var(--primary-green);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.malaysia-stats h2:after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background-color: var(--primary-green);
+  margin: 0.75rem auto 0;
+}
+
+.stats-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.stat-item {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+  margin-right: 1.5rem;
+  background-color: rgba(46, 139, 87, 0.1);
+  padding: 1.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-green);
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary-green);
+  margin: 0 0 0.5rem 0;
+}
+
+.stat-description {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 1rem;
+}
+
+.stat-source {
+  font-size: 0.75rem;
+  color: #666;
+  font-style: italic;
+  margin: 0.5rem 0 0 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .stats-container {
+    flex-direction: column;
+  }
+  
+  .stat-item {
+    width: 100%;
+  }
+  
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+}
