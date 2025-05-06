@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, Circle, Recycle, X } from 'lucide-react';
+import { CheckCircle, Circle, Recycle, X, AlertTriangle } from 'lucide-react';
 import './CameraStepOne.css';
 import './CameraStepTwo.css';
 import useWasteData from '../../hooks/useWasteData';
@@ -37,8 +37,8 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
     // Get only the highest confidence material
     const material = highestConfidenceDetection.class;
 
-    // Consider it recyclable if we have a material
-    const isRecyclable = !!material;
+    // Check if material is "Unrecyclable" or similar
+    const isRecyclable = material && material.toLowerCase() !== "unrecyclable";
 
     return {
       count: 1, // Always show 1 since we're only keeping the highest confidence item
@@ -70,13 +70,13 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
     return { weightKg, carbonKg };
   };
 
-  // Show dialog only on first render and if something was detected
+  // Show dialog only on first render, if something was detected, AND if it's recyclable
   useEffect(() => {
-    if (!hasShownDialogs && count > 0) {
+    if (!hasShownDialogs && count > 0 && isRecyclable) {
       setShowChoiceDialog(true);
       setHasShownDialogs(true);
     }
-  }, [count, hasShownDialogs]);
+  }, [count, hasShownDialogs, isRecyclable]);
 
   // When opening the quantity input dialog, reset itemQuantity to the default value "1" and clear any error messages
   const handleRecycleChoice = () => {
@@ -186,34 +186,43 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
       </div>
 
       <div className="detection-results-container">
-        {/* Always show recycle icon regardless of choice */}
+        {/* Show different icon based on recyclability */}
         <div className="recycle-icon-container">
-          <Recycle size={100} color="#22c55e" />
+          {isRecyclable ?
+            <Recycle size={100} color="#22c55e" /> :
+            <AlertTriangle size={100} color="#ef4444" />
+          }
         </div>
 
         {/* Always use green background for results */}
         <div className="detection-results green-background">
           {count > 0 ? (
             <>
-
-
-              {materials.length > 0 && (
+              {/* Switched the order of these two elements */}
+              <div className="detection-item">
+                <div className="detection-bullet">•</div>
+                <div className={isRecyclable ? "recyclable-indicator" : "non-recyclable-indicator"}>
+                  {isRecyclable ?
+                    <CheckCircle size={18} className="indicator-icon" /> :
+                    <AlertTriangle size={18} className="indicator-icon" />
+                  }
+                  {isRecyclable ? 'Recyclable' : '! Not Recyclable'}
+                </div>
+              </div>
+              
+              {materials.length > 0 && isRecyclable && (
                 <div className="detection-item">
                   <div className="detection-bullet">•</div>
                   <div>Material: <span className="material-name">{materials[0]}</span></div>
                 </div>
               )}
 
-              <div className="detection-item">
-                <div className="detection-bullet">•</div>
-                <div className={isRecyclable ? "recyclable-indicator" : "non-recyclable-indicator"}>
-                  {isRecyclable ?
-                    <CheckCircle size={18} className="indicator-icon" /> :
-                    <Circle size={18} className="indicator-icon" />
-                  }
-                  {isRecyclable ? 'Recyclable' : 'Not Recyclable'}
+              {!isRecyclable && (
+                <div className="detection-item">
+                  <div className="detection-bullet">•</div>
+                  <div>The uploaded item is not recyclable. Please dispose of it properly.</div>
                 </div>
-              </div>
+              )}
             </>
           ) : (
             <div className="no-items-detected">
@@ -230,7 +239,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
       </button>
 
       {/* Choice dialog modal */}
-      {showChoiceDialog && count > 0 && (
+      {showChoiceDialog && count > 0 && isRecyclable && (
         <div className="modal-overlay">
           <div className="modal-container">
             <div className="modal-header">
