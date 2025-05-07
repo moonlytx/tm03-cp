@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { CheckCircle, Circle, Recycle, X, AlertTriangle } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { CheckCircle, Recycle, X, AlertTriangle, ListRestart, ChevronsDown } from 'lucide-react';
 import './CameraStepOne.css';
 import './CameraStepTwo.css';
 import useWasteData from '../../hooks/useWasteData';
@@ -8,6 +8,11 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
   savedQuantity = 1 }) {
   // Use state to track if dialogs have been shown
   const [hasShownDialogs, setHasShownDialogs] = useState(dialogAlreadyShown);
+  // State for showing reuse materials section
+  const [showReuseTips, setShowReuseTips] = useState(false);
+  // New state for animation
+  const [isClosing, setIsClosing] = useState(false);
+  const reuseTipsRef = useRef(null);
 
   // State for recycling dialogs
   const [showChoiceDialog, setShowChoiceDialog] = useState(false);
@@ -147,12 +152,88 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
     }
   };
 
+  // Modified toggle function for reuse tips with animation
+  const toggleReuseTips = () => {
+    if (showReuseTips) {
+      // Start closing animation
+      setIsClosing(true);
+      // Wait for animation to finish before actually hiding
+      setTimeout(() => {
+        setShowReuseTips(false);
+        setIsClosing(false);
+      }, 300); // Match this to animation duration
+    } else {
+      // Just show immediately
+      setShowReuseTips(true);
+    }
+  };
+
   // Get current material name
   const materialName = materials.length > 0 ? materials[0] : '';
 
   // Calculate estimates for dialog display
   const quantity = itemQuantity === '' ? 0 : parseInt(itemQuantity);
   const { weightKg, carbonKg } = calculateEstimates(materialName, quantity);
+
+  // Get reuse tips based on material type
+  const getReuseTips = (material) => {
+    if (!material) return [];
+    
+    const materialLower = material.toLowerCase();
+    
+    if (materialLower.includes('paper')) {
+      return [
+        "Create homemade greeting cards or gift tags",
+        "Use as wrapping paper for small gifts",
+        "Make DIY paper mache projects",
+        "Create origami decorations",
+        "Use as drawer liners or shelf paper"
+      ];
+    } else if (materialLower.includes('plastic')) {
+      return [
+        "Use containers for small item storage",
+        "Create plant pots with proper drainage holes",
+        "Make bird feeders with plastic bottles",
+        "Use as sorting containers for small parts",
+        "Create DIY watering cans for plants"
+      ];
+    } else if (materialLower.includes('glass')) {
+      return [
+        "Reuse as food storage containers",
+        "Create decorative vases or candle holders",
+        "Use as organizing containers for office supplies",
+        "Make terrarium planters for small plants",
+        "Create decorative light fixtures"
+      ];
+    } else if (materialLower.includes('metal') || materialLower.includes('aluminum')) {
+      return [
+        "Use cans as pencil or utensil holders",
+        "Create garden edge borders with flattened cans",
+        "Make wind chimes from metal pieces",
+        "Use as seed starters for gardening",
+        "Create decorative luminaries with punched patterns"
+      ];
+    } else if (materialLower.includes('cardboard')) {
+      return [
+        "Create storage boxes for organizing",
+        "Use as backing for picture frames",
+        "Make DIY cat scratching pads",
+        "Create children's toys like play houses",
+        "Use as compost material for gardening"
+      ];
+    } else {
+      // Generic reuse tips for other materials
+      return [
+        "Consider donating if the item is still in good condition",
+        "Repurpose into art or craft projects",
+        "Use for educational purposes in schools",
+        "Find creative upcycling ideas online",
+        "Host a swap event with friends or community"
+      ];
+    }
+  };
+
+  const reuseTips = getReuseTips(materialName);
 
   return (
     <div className="camera-interface">
@@ -203,8 +284,8 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
                 <div className="detection-bullet">•</div>
                 <div className={isRecyclable ? "recyclable-indicator" : "non-recyclable-indicator"}>
                   {isRecyclable ?
-                    <CheckCircle size={18} className="indicator-icon" /> :
-                    <AlertTriangle size={18} className="indicator-icon" />
+                    <CheckCircle size={22} className="indicator-green-icon" /> :
+                    <AlertTriangle size={22} className="indicator-red-icon" />
                   }
                   {isRecyclable ? 'Recyclable' : '! Not Recyclable'}
                 </div>
@@ -232,6 +313,40 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
           )}
         </div>
       </div>
+
+      {/* Reuse Materials Section - WITH ANIMATION */}
+      {count > 0 && materials.length > 0 && (
+        <div className="reuse-materials-section">
+          <button 
+            onClick={toggleReuseTips} 
+            className="reuse-materials-button"
+          >
+            <ListRestart size={30} className="reuse-icon" />
+            Recommendations to Reuse {materials[0]}
+            <ChevronsDown 
+              size={24} 
+              className={`arrow-icon ${showReuseTips ? 'open' : ''}`} 
+              style={{ marginLeft: '8px' }}
+            />
+          </button>
+          
+          {(showReuseTips || isClosing) && (
+            <div 
+              ref={reuseTipsRef}
+              className={`reuse-tips-container ${isClosing ? 'closing' : ''}`}
+            >
+              <ul className="reuse-tips-list">
+                {reuseTips.map((tip, index) => (
+                  <li key={index} className="reuse-tip-item">
+                    <div className="reuse-tip-bullet">•</div>
+                    <div className="reuse-tip-text">{tip}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Scan Another Item button */}
       <button onClick={handleScanAnother} className="scan-another-button">
