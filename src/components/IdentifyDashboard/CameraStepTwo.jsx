@@ -222,14 +222,8 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
         "Use as compost material for gardening"
       ];
     } else {
-      // Generic reuse tips for other materials
-      return [
-        "Consider donating if the item is still in good condition",
-        "Repurpose into art or craft projects",
-        "Use for educational purposes in schools",
-        "Find creative upcycling ideas online",
-        "Host a swap event with friends or community"
-      ];
+      // Return empty array for unknown materials
+      return [];
     }
   };
 
@@ -314,8 +308,8 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
         </div>
       </div>
 
-      {/* Reuse Materials Section - WITH ANIMATION */}
-      {count > 0 && materials.length > 0 && (
+      {/* Reuse Materials Section - ONLY SHOWN FOR RECYCLABLE ITEMS */}
+      {count > 0 && materials.length > 0 && isRecyclable && (
         <div className="reuse-materials-section">
           <button 
             onClick={toggleReuseTips} 
