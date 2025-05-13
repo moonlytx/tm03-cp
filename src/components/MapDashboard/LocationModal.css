@@ -1,0 +1,60 @@
+.location-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.location-modal {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.location-modal-title {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  color: #1f2937;
+}
+.location-modal-text {
+  margin: 0 0 24px 0;
+  font-size: 16px;
+  color: #4b5563;
+  line-height: 1.5;
+}
+.location-modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+.default-location-button {
+  padding: 8px 16px;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+.share-location-button {
+  padding: 8px 16px;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+.share-location-button:hover {
+  background-color: #16a34a;
+} 

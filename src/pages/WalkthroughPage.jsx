@@ -10,8 +10,8 @@ function WalkthroughPage() {
       <div className="container">
         <div className="content-container recycling-container">
           <header className="recycling-header">
-            <h1>Carbon Patrol Guidelines</h1>
-            <p>Learn how to recycle the right way and track your progress</p>
+            <h1>Carbon Patrol Guide</h1>
+            <p>Learn How To Recycle The Right Way and Track Your Progress</p>
           </header>
             {/* For recycling steps cards */}
             <RecyclingSteps />

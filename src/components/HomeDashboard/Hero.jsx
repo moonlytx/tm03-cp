@@ -1,5 +1,5 @@
 import React from 'react';
-import { Recycle, BarChart3, Building } from 'lucide-react';
+import { Recycle, ChartColumnDecreasing, Building2 } from 'lucide-react';
 import './Hero.css';
 
 function Hero() {
@@ -14,7 +14,7 @@ function Hero() {
         </p>
         
         <div className="malaysia-stats">
-          <h2>Malaysia Recycling Facts</h2>
+          <h2></h2>
           
           <div className="stats-container">
             <div className="stat-item">
@@ -30,18 +30,18 @@ function Hero() {
             
             <div className="stat-item">
               <div className="stat-icon">
-                <Building size={42} />
+                <Building2 size={42} />
               </div>
               <div className="stat-content">
                 <p className="stat-value">39,000+ tonnes</p>
-                <p className="stat-description">of solid waste end up in landfills daily (1.2kg per person in KL)</p>
+                <p className="stat-description">of solid waste end up in landfills daily, and 2,200 tonnes in Kuala Lumpur alone (1.2kg / person in KL)</p>
                 <p className="stat-source">Sources: SWCorp, TheStar, The Straits Times</p>
               </div>
             </div>
             
             <div className="stat-item">
               <div className="stat-icon">
-                <BarChart3 size={42} />
+                <ChartColumnDecreasing size={42} />
               </div>
               <div className="stat-content">
                 <p className="stat-value">#37 Worldwide</p>

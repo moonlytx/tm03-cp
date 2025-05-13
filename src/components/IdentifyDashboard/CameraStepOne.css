@@ -20,41 +20,65 @@
 .step-description {
   font-size: 1.3rem;
   text-align: center;
-  margin-bottom: 3rem;
-  max-width: 400px;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
 }
 
+/* Enhanced camera display area */
 .camera-display {
-  width: 160px;
-  height: 110px;
-  margin-top: 2rem;
+  width: 80%;
+  max-width: 640px;
+  height: 480px;
   margin-bottom: 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.camera-preview,
+.photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .camera-icon {
-  width: 190px;
-  height: 130px;
-  color: #92400e;
+  width: 200px;
+  height: auto;
+  opacity: 0.7;
 }
 
 .start-button {
   background-color: #bbf7d0;
   color: #166534;
   font-weight: 600;
-  padding: 10px 50px;
+  padding: 12px 60px;
   border-radius: 9999px;
   font-size: 1.3rem;
   margin-bottom: 1.5rem;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
 }
 
 .start-button:hover {
   background-color: #86efac;
   transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .start-button:active {
@@ -93,7 +117,7 @@
 
 .warning-text {
   color: #6b7280;
-  font-size: 1.25rem; 
+  font-size: 1.25rem;
   margin-top: 0.2rem;
 }
 
@@ -109,34 +133,43 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  gap: 80px;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.example-item {
+  flex: 1;
+  min-width: 250px;
+  max-width: 350px;
 }
 
 .example-label {
   font-size: 1.5rem;
   font-weight: 500;
   color: #4b5563;
+  text-align: center;
+  margin-bottom: 8px;
 }
 
 .example-image-container {
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 300px;
-  margin-top: 0;
-  margin-bottom: 5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .example-image {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: contain;
+  display: block;
 }
 
-/* Camera controls styles */
+/* Enhanced camera controls styles */
 .camera-controls {
   display: flex;
-  gap: 10px;
+  gap: 16px;
   margin-bottom: 1.5rem;
 }
 
@@ -144,16 +177,24 @@
 .cancel-button,
 .confirm-button,
 .retry-button {
-  padding: 8px 16px;
+  padding: 12px 24px;
   border-radius: 8px;
   font-weight: 600;
   border: none;
   cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .capture-button {
   background-color: #bbf7d0;
   color: #166534;
+}
+
+.capture-button:hover {
+  background-color: #86efac;
+  transform: translateY(-2px);
 }
 
 .cancel-button,
@@ -162,9 +203,20 @@
   color: #b91c1c;
 }
 
+.cancel-button:hover,
+.retry-button:hover {
+  background-color: #fecaca;
+  transform: translateY(-2px);
+}
+
 .confirm-button {
   background-color: #bbf7d0;
   color: #166534;
+}
+
+.confirm-button:hover {
+  background-color: #86efac;
+  transform: translateY(-2px);
 }
 
 /* Options menu styles */
@@ -172,6 +224,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 1.5rem;
   width: 100%;
@@ -183,41 +236,75 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 12px 20px;
   background-color: #bbf7d0;
   color: #166534;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
   width: 200px;
-
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .option-button:hover {
-  background-color: #166534;
-  color: #bbf7d0;
-  border: none;
+  background-color: #86efac;
+  color: #166534;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.next-button {
+.option-button:active {
+  transform: translateY(0);
+}
+
+/* Toast notification styling */
+.toast-notification {
   position: fixed;
-  top: 50%;
-  right: 30px;
-  transform: translateY(-50%);
-  background-color: #13884c;
-  color: white;
-  font-weight: 700;
-  border-radius: 9999px;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  top: 20px;
+  right: 20px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: center;
-  z-index: 10;
+  gap: 10px;
+  max-width: 350px;
+  animation: slideIn 0.3s ease;
 }
 
-.next-button:hover {
-  background-color: #0ec13b;
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .camera-display {
+    width: 95%;
+    height: 360px;
+  }
+
+  .options-menu {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .examples-column {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .example-item {
+    max-width: 300px;
+  }
 }

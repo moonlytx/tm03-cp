@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { CheckCircle, Recycle, X, AlertTriangle, ListRestart, ChevronsDown } from 'lucide-react';
+import { CheckCircle, Recycle, Trash2, AlertTriangle, ListRestart, ChevronsDown } from 'lucide-react';
 import './CameraStepOne.css';
 import './CameraStepTwo.css';
 import useWasteData from '../../hooks/useWasteData';
@@ -26,7 +26,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
   // Process detections to get material information with highest confidence
   const processDetections = () => {
     if (!capturedData || !capturedData.detections || capturedData.detections.length === 0) {
-      return { count: 0, materials: [], isRecyclable: false };
+      return { count: 0, materials: [], isRecyclable: false, recommendations: [] };
     }
 
     // Find the detection with highest confidence
@@ -45,15 +45,39 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
     // Check if material is "Unrecyclable" or similar
     const isRecyclable = material && material.toLowerCase() !== "unrecyclable";
 
+    // Extract recommendations from API response if they exist
+    const recommendations = highestConfidenceDetection.recommendations ? 
+      parseRecommendations(highestConfidenceDetection.recommendations) : [];
+
     return {
       count: 1, // Always show 1 since we're only keeping the highest confidence item
       materials: [material],
       isRecyclable,
-      confidence: highestConfidenceDetection.confidence
+      confidence: highestConfidenceDetection.confidence,
+      recommendations
     };
   };
 
-  const { count, materials, isRecyclable } = processDetections();
+  // Parse recommendations from API response
+  const parseRecommendations = (recommendationsStr) => {
+    if (!recommendationsStr) return [];
+    
+    try {
+      // Parse the string-based recommendations into an array
+      // The format appears to be numbered like "\n\n1. **Title:** Description\n\n2. **Title:** Description"
+      const items = recommendationsStr.split(/\d+\.\s+\*\*/).filter(item => item.trim());
+      
+      return items.map(item => {
+        // Clean up the format from "Title:** Description" to just "Description"
+        return item.replace(/^.*?\*\*\s*/, '').trim();
+      }).filter(tip => tip); // Filter out any empty strings
+    } catch (e) {
+      console.error("Error parsing recommendations:", e);
+      return [];
+    }
+  };
+
+  const { count, materials, isRecyclable, recommendations } = processDetections();
 
   // Calculate estimated weight and carbon emissions based on material
   const calculateEstimates = (materialName, quantity) => {
@@ -175,8 +199,8 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
   const quantity = itemQuantity === '' ? 0 : parseInt(itemQuantity);
   const { weightKg, carbonKg } = calculateEstimates(materialName, quantity);
 
-  // Get reuse tips based on material type
-  const getReuseTips = (material) => {
+  // Fallback recommendations if API doesn't provide any
+  const getFallbackReuseTips = (material) => {
     if (!material) return [];
     
     const materialLower = material.toLowerCase();
@@ -227,7 +251,9 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
     }
   };
 
-  const reuseTips = getReuseTips(materialName);
+  // Use API recommendations if available, otherwise fall back to our predefined ones
+  const reuseTips = recommendations && recommendations.length > 0 ? 
+    recommendations : getFallbackReuseTips(materialName);
 
   return (
     <div className="camera-interface">
@@ -265,7 +291,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
         <div className="recycle-icon-container">
           {isRecyclable ?
             <Recycle size={100} color="#22c55e" /> :
-            <AlertTriangle size={100} color="#ef4444" />
+            <Trash2 size={100} color="#ef4444" />
           }
         </div>
 
@@ -295,7 +321,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
               {!isRecyclable && (
                 <div className="detection-item">
                   <div className="detection-bullet">•</div>
-                  <div>The uploaded item is not recyclable. Please dispose of it properly.</div>
+                  <div>The uploaded item is deemed non-recyclable. Kindly dispose of it appropriately.</div>
                 </div>
               )}
             </>
@@ -316,7 +342,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
             className="reuse-materials-button"
           >
             <ListRestart size={30} className="reuse-icon" />
-            Recommendations to Reuse {materials[0]}
+            AI Recommendations to Reuse {materials[0]}
             <ChevronsDown 
               size={24} 
               className={`arrow-icon ${showReuseTips ? 'open' : ''}`} 
@@ -357,7 +383,6 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
                 onClick={handleSkipRecycle}
                 className="modal-close-button"
               >
-                <X size={20} />
               </button>
             </div>
 
@@ -389,7 +414,6 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
                 onClick={() => setShowQuantityDialog(false)}
                 className="modal-close-button"
               >
-                <X size={20} />
               </button>
             </div>
 

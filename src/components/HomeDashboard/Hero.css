@@ -41,7 +41,7 @@
 .malaysia-stats h2:after {
   content: '';
   display: block;
-  width: 80px;
+  width: 250px;
   height: 3px;
   background-color: var(--primary-green);
   margin: 0.75rem auto 0;
@@ -51,20 +51,22 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2rem;
   width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.stat-item {
+.hero .stat-item {
   flex: 1;
-  min-width: 300px;
+  min-width: 350px;
   display: flex;
   background-color: var(--card-bg);
   border-radius: 8px;
   padding: 2.5rem 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 180px;
+  height: 220px;
 }
 
 .stat-item:hover {
@@ -91,21 +93,23 @@
   justify-content: center;
 }
 
-.stat-value {
-  font-size: 2.5rem;
+
+.malaysia-stats .stat-value {
+  font-size: 2.1rem;
   font-weight: bold;
   color: var(--primary-green);
-  margin: 0 0 0.75rem 0;
+  margin: auto;
 }
 
-.stat-description {
+.malaysia-stats .stat-description {
   margin: 0;
   line-height: 1.5;
-  font-size: 1.1rem;
+  font-size: 1.3rem ;
+  color: darkseagreen;
 }
 
-.stat-source {
-  font-size: 0.75rem;
+.malaysia-stats .stat-source {
+  font-size: 1rem ;
   color: #666;
   font-style: italic;
   margin: 0.5rem 0 0 0;

@@ -1,0 +1,80 @@
+.center-card {
+  display: flex;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0;
+  padding: 0;
+}
+.center-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.center-card-selected {
+  border: 2px solid #3b82f6;
+}
+.center-details {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.name-and-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.center-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+.status-indicator {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 100px;
+}
+.status-open {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+.status-closed {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+.nearest-indicator {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  margin-left: 8px;
+}
+.center-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+}
+.center-address {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.center-distance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  font-weight: 600;
+  color: #4b5563;
+  font-size: 14px;
+} 

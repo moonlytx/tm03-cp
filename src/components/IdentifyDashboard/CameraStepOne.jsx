@@ -13,6 +13,7 @@ function CameraStepOne({ onNext }) {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '', type: '' });
   const [currentFile, setCurrentFile] = useState(null);
+  const [facingMode, setFacingMode] = useState('environment'); // Default to back camera
 
   const videoRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -53,26 +54,62 @@ function CameraStepOne({ onNext }) {
     return new File([u8arr], filename, { type: mime });
   };
 
-  // Start the camera
+  // Start the camera with specified facing mode
   const startCameraStream = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const constraints = {
+        video: {
+          facingMode: facingMode,
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        }
+      };
+
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
       setVideoStream(stream);
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
     } catch (err) {
+      console.error("Camera error:", err);
       showToast("Cannot access the camera, please check the permissions");
       setCameraActive(false);
     }
   };
 
+  // Switch between front and back camera
+  const switchCamera = () => {
+    // Stop current stream
+    if (videoStream) {
+      videoStream.getTracks().forEach(track => track.stop());
+    }
+
+    // Toggle facing mode
+    setFacingMode(prevMode => prevMode === 'user' ? 'environment' : 'user');
+
+    // Restart stream with new facing mode
+    setTimeout(() => {
+      startCameraStream();
+    }, 300);
+  };
+
   // Take a photo
   const takePhoto = () => {
+    if (!videoRef.current) return;
+
+    const video = videoRef.current;
     const canvas = document.createElement('canvas');
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
-    canvas.getContext('2d').drawImage(videoRef.current, 0, 0);
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext('2d');
+    // Flip horizontally if using front camera
+    if (facingMode === 'user') {
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+    }
+
+    ctx.drawImage(video, 0, 0);
     const photoURL = canvas.toDataURL('image/png');
     setCapturedPhoto(photoURL);
     setCurrentFile(dataURLtoFile(photoURL));
@@ -80,6 +117,11 @@ function CameraStepOne({ onNext }) {
 
   // Upload or send the captured photo
   const handleImageUpload = async (imageFile) => {
+    if (!imageFile) {
+      showToast("No image to upload. Please capture or select an image first.");
+      return;
+    }
+
     setLoading(true);
     setCurrentFile(imageFile); // Store the current file for retry capability
 
@@ -153,19 +195,8 @@ function CameraStepOne({ onNext }) {
       {/* Toast notification */}
       {toast.show && (
         <div className="toast-notification" style={{
-          position: 'fixed',
-          top: '20px',
-          right: '20px',
-          padding: '12px 16px',
-          borderRadius: '8px',
           backgroundColor: toast.type === 'error' ? '#fee2e2' : '#ecfdf5',
           color: toast.type === 'error' ? '#b91c1c' : '#047857',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          zIndex: 1000,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          maxWidth: '350px'
         }}>
           <div style={{ flexShrink: 0 }}>
             {toast.type === 'error' ? <AlertCircle size={20} /> : <Check size={20} />}
@@ -211,7 +242,29 @@ function CameraStepOne({ onNext }) {
       <div className="camera-display">
         {cameraActive ? (
           !capturedPhoto ? (
-            <video ref={videoRef} autoPlay className="camera-preview" />
+            <>
+              <video ref={videoRef} autoPlay playsInline className="camera-preview" />
+              <button
+                onClick={switchCamera}
+                style={{
+                  position: 'absolute',
+                  bottom: '16px',
+                  right: '16px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: 'none',
+                  cursor: 'pointer',
+                  zIndex: 5
+                }}
+              >
+                <RefreshCw size={24} color="#166534" />
+              </button>
+            </>
           ) : (
             <img src={capturedPhoto} alt="Captured result" className="photo-preview" />
           )
@@ -222,6 +275,9 @@ function CameraStepOne({ onNext }) {
               alt="Camera"
               className="camera-icon"
             />
+            <p style={{ color: '#64748b', marginTop: '16px', fontSize: '1.1rem' }}>
+              Tap to start camera or upload an image
+            </p>
           </div>
         )}
       </div>
@@ -240,6 +296,7 @@ function CameraStepOne({ onNext }) {
           {!capturedPhoto ? (
             <>
               <button onClick={takePhoto} className="capture-button">
+                <Camera size={20} style={{ marginRight: '8px' }} />
                 Capture
               </button>
               <button
@@ -249,6 +306,7 @@ function CameraStepOne({ onNext }) {
                 }}
                 className="cancel-button"
               >
+                <X size={20} style={{ marginRight: '8px' }} />
                 Cancel
               </button>
             </>
@@ -259,13 +317,26 @@ function CameraStepOne({ onNext }) {
                 className="confirm-button"
                 disabled={loading}
               >
-                {loading ? "Uploading..." : "Confirm Use"}
+                {loading ? (
+                  <>
+                    <div style={{ width: '20px', height: '20px', marginRight: '8px', animation: 'spin 1s linear infinite' }}>
+                      <RefreshCw size={20} />
+                    </div>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <Check size={20} style={{ marginRight: '8px' }} />
+                    Confirm Use
+                  </>
+                )}
               </button>
               <button
                 onClick={() => setCapturedPhoto(null)}
                 className="retry-button"
                 disabled={loading}
               >
+                <RefreshCw size={20} style={{ marginRight: '8px' }} />
                 Retake
               </button>
             </>
@@ -283,7 +354,7 @@ function CameraStepOne({ onNext }) {
             }}
             className="option-button"
           >
-            <Upload size={18} /> Upload Image
+            <Upload size={18} style={{ marginRight: '8px' }} /> Upload Image
           </button>
           <button
             onClick={() => {
@@ -293,7 +364,7 @@ function CameraStepOne({ onNext }) {
             }}
             className="option-button"
           >
-            <Camera size={18} /> Take Photo
+            <Camera size={18} style={{ marginRight: '8px' }} /> Take Photo
           </button>
         </div>
       )}
@@ -309,7 +380,7 @@ function CameraStepOne({ onNext }) {
               Note: Preferably one item at a time for better result
             </span>
           </div>
-          
+
           {/* Second Warning Note */}
           <div className="warning-note">
             <AlertTriangle size={40} className="warning-icon" />
@@ -318,10 +389,10 @@ function CameraStepOne({ onNext }) {
             </span>
           </div>
         </div>
-        
+
         {/* Examples Section */}
         <h3 className="examples-title">Example</h3>
-        
+
         <div className="examples-column">
           {/* Clear Example */}
           <div className="example-item">

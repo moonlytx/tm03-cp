@@ -1,7 +1,6 @@
 import React from 'react';
-import { UserProfile, StatsCards, ProgressBar, TreeProgress, AccumulatedWeights }
-from '../components/ReportDashboard';
-import ShareButton from '../components/ReportDashboard/ShareButton';
+import { UserProfile, StatsCards, ProgressBar, TreeProgress, AccumulatedWeights } from '../components/ReportDashboard';
+import CaptureButton from '../components/ReportDashboard/CaptureButton';
 import SaveLoadButtons from '../components/ReportDashboard/SaveLoadButtons';
 import useWasteData from '../hooks/useWasteData';
 import './ReportPage.css';
@@ -40,7 +39,7 @@ const WasteDashboard = () => {
           <header className="waste-header">
             <h1>Point of You</h1>
             <p>Keep Track of Your Contributions in Saving the Planet</p>
-            <ShareButton />
+            <CaptureButton />
           </header>
           <main>
             {/* Feed details fetched from storage */}

@@ -67,3 +67,47 @@
   margin-bottom: 3rem;
 }
 
+/* Guide Link Styles */
+.guide-link-container {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0 4rem 0;
+  padding-top: 20px;
+}
+
+.guide-link {
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: darkseagreen; 
+  font-size: 1.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.guide-link .guide-icon {
+  color: darkseagreen;
+  margin-right: 10px;
+}
+
+.guide-underline {
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: darkseagreen;
+}
+
+.guide-link:hover {
+  color: seagreen; /* darker seagreen shade */
+}
+
+.guide-link:hover .guide-icon {
+  color: seagreen;
+}
+
+.guide-link:hover .guide-underline {
+  background-color: seagreen;
+}

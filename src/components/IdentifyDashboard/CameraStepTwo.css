@@ -1,3 +1,11 @@
+.waste-app {
+  position: relative;
+  overflow-x: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
 .more-details-link {
   display: block;
   text-align: center;
@@ -137,6 +145,7 @@
 }
 
 /* Dialog styles */
+
 .modal-overlay {
   position: fixed;
   width: 100%;
@@ -150,7 +159,13 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow: hidden;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+
 
 .modal-container {
   background-color: white;
@@ -376,3 +391,4 @@
 .reuse-materials-button .arrow-icon.open {
   transform: rotate(180deg);
 }
+

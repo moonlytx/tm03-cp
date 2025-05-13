@@ -5,7 +5,7 @@
 
 .save-button,
 .load-button {
-  background-color: var(--highlight-color);
+  background-color: #16a34a;
   color: white;
   border: none;
   border-radius: 0.375rem;
