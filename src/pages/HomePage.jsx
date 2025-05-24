@@ -6,11 +6,9 @@ import './HomePage.css';
 import { useEffect, useState } from 'react';
 
 function HomePage() {
-  // Use the hook to fetch and format community carbon emission and number of trees
   const { communityCarbonEmission, fetchCommunityCarbonEmission } = useWasteData();
   const [communityCarbon, setCommunityCarbon] = useState(communityCarbonEmission);
 
-  // Fetch the latest readings when component mounts
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetchCommunityCarbonEmission();

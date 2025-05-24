@@ -15,19 +15,36 @@
   padding: 0 40px;
 }
 
-/* Set up citation links */
-.footer-links {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 30px;
+.footer-header {
+  text-align: center;
+  color: seagreen;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+.footer-links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   margin-bottom: 30px;
 }
 
-/* Build column styles */
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
 .footer-column {
+  flex: 1;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .footer-category {
@@ -39,9 +56,9 @@
   letter-spacing: 0.5px;
   border-bottom: 1px solid #D0E7D0;
   padding-bottom: 8px;
+  text-align: center;
 }
 
-/* Set formatting for buttons and when hovered over */
 .footer-link-title {
   color: darkseagreen;
   margin-bottom: 10px;
@@ -49,6 +66,7 @@
   text-decoration: none;
   transition: transform 0.2s ease, color 0.2s ease;
   font-size: 15px;
+  text-align: center;
 }
 
 .footer-link-title:hover {
@@ -57,7 +75,6 @@
   text-decoration: none;
 }
 
-/* Formatting for disclaimer */
 .footer-bottom {
   text-align: center;
   padding-top: 20px;

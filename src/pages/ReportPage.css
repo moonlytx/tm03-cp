@@ -27,7 +27,7 @@ main {
   color: #b91c1c;
 }
 
-/* Set margin and padding */
+
 .waste-container {
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@ main {
   padding-top: 2rem;
 }
 
-/* Header and sub-header styles */
+
 .waste-header {
   text-align: center;
   margin-bottom: 4rem; 
@@ -53,7 +53,6 @@ main {
   color: #166534;
 }
 
-/* Ensure content is not gathered in the middle */
 main {
   width: 100%;
   max-width: 2000px; 
@@ -67,7 +66,6 @@ main {
   gap: 2rem; 
 }
 
-/* Proper placement of all components */
 .progress-bar-container {
   margin-bottom: 0.5rem;
 }

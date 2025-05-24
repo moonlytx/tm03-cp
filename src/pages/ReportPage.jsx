@@ -22,7 +22,6 @@ const WasteDashboard = () => {
     handleNameClick,
     handleNameSave,
     setUserName,
-    // Added for Save / Load Buttons
     handleSaveProgress,
     handleLoadProgress
   } = useWasteData();
@@ -77,7 +76,7 @@ const WasteDashboard = () => {
                 totalAccumulatedWaste={totalAccumulatedWaste}
               />
             </section>
-            {/* Save / Load buttons positioned at the bottom center */}
+            {/* Place Save / Load buttons */}
             <div className="save-load-bottom-container">
               <SaveLoadButtons 
                 onSave={handleSaveProgress} 

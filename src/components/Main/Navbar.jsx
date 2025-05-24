@@ -18,7 +18,7 @@ function Navbar() {
           <Link to="/identify" className="nav-link">IDENTIFY</Link>
           <Link to="/map" className="nav-link">MAP</Link>
           <Link to="/report" className="nav-link">REPORT</Link>
-          <Link to="/walkthrough" className="nav-link">WALKTHROUGH</Link>
+          <Link to="/guide" className="nav-link">GUIDE</Link>
         </div>
       </div>
     </nav>

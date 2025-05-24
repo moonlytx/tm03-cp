@@ -17,7 +17,6 @@ const SaveLoadButtons = ({ onSave, onLoad }) => {
     const file = e.target.files[0];
     if (file) {
       onLoad(file);
-      // Reset the file input
       e.target.value = '';
     }
   };

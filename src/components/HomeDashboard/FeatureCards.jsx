@@ -6,11 +6,8 @@ import './FeatureCards.css';
 function FeatureCards() {
   const navigate = useNavigate();
   
-  // Function to handle navigation 
   const handleNavigation = (path) => {
-    // Navigate to the specified path
     navigate(path);
-    // Instantly scroll to top without animation
     window.scrollTo(0, 0);
   };
 
@@ -39,7 +36,7 @@ function FeatureCards() {
       <div className="guide-link-container">
         <div 
           className="guide-link" 
-          onClick={() => handleNavigation('/walkthrough')}
+          onClick={() => handleNavigation('/guide')}
         >
           <SwatchBook size={36} className="guide-icon" />
           <span>Friendly Quick-Start Guide</span>

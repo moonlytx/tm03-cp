@@ -67,7 +67,6 @@
   margin-bottom: 3rem;
 }
 
-/* Guide Link Styles */
 .guide-link-container {
   display: flex;
   justify-content: center;
@@ -101,7 +100,7 @@
 }
 
 .guide-link:hover {
-  color: seagreen; /* darker seagreen shade */
+  color: seagreen; 
 }
 
 .guide-link:hover .guide-icon {

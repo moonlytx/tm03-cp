@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { MapPin, Clock, Info } from 'lucide-react';
+import { MapPin, Clock, Info, MapPinHouse } from 'lucide-react';
 import { FaTrash } from 'react-icons/fa';
 import { GoogleMap, Marker, Polyline, useLoadScript, InfoWindow, Autocomplete } from '@react-google-maps/api';
 import './RecyclingCenters.css';
@@ -21,10 +21,10 @@ export default function RecyclingCenters() {
     filteredAndSortedCenters, setFilteredAndSortedCenters, displayedCenters, setDisplayedCenters,
     routePolyline, setRoutePolyline, routeTargetId, setRouteTargetId,
     handleSelectCenter, handleShowRoute, handleLocationSearch,
-    requestLocationPermission, useDefaultLocation, startLocationTracking, calculateDistance
+    requestLocationPermission, useDefaultLocation, startLocationTracking, calculateDistance,
+    routeInfo
   } = useRecyclingCentersData(defaultCenter);
 
-  // Hide the default InfoWindow close button
   useEffect(() => {
     const style = document.createElement('style');
     style.innerHTML = `
@@ -45,9 +45,8 @@ export default function RecyclingCenters() {
     minHeight: '300px',
   };
 
-  // Load Google Maps script with Places & Geometry library
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyBtMH1f3lNDcG_4JXEM9NqTm2z8WZ4nIcs',
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: ['places', 'geometry'],
   });
 
@@ -56,8 +55,6 @@ export default function RecyclingCenters() {
 
   return (
     <div className="recycling-centers-container">
-
-      {/* Location search input with Google Places Autocomplete */}
       <div className="search-bar">
         <Autocomplete
           onLoad={ac => setAutocomplete(ac)}
@@ -80,18 +77,32 @@ export default function RecyclingCenters() {
             type="text"
             value={inputLocation}
             onChange={e => setInputLocation(e.target.value)}
-            placeholder="Enter a location (e.g. KLCC, Petaling Jaya)"
+            placeholder="Enter and choose a location (e.g. KLCC, Petaling Jaya)"
             className="search-input"
           />
         </Autocomplete>
         <button
-          onClick={handleLocationSearch}
-          className="search-button"
+          onClick={() => {
+            if (userLocation && userLocation !== defaultCenter) {
+              setSearchedLocation(null);
+              setInputLocation('');
+              setSearchError('');
+            }
+          }}
+          className="return-location-button"
+          disabled={!userLocation || userLocation === defaultCenter}
+          title="Return to Shared Location"
         >
-          Search
+          <MapPinHouse size={20} />
         </button>
       </div>
       {searchError && <div className="search-error">{searchError}</div>}
+
+      {searchedLocation && (
+        <div className="search-range-info">
+          Showing recycling centers within 10km of {inputLocation}
+        </div>
+      )}
 
       {loading && <div className="loading">Loading recycling centers...</div>}
       {error && <div className="error">Error: {error}</div>}
@@ -112,9 +123,12 @@ export default function RecyclingCenters() {
           bin={bin}
           isOpen={center => true}
           routePolyline={routePolyline}
+          routeInfo={routeInfo}
+          routeTargetId={routeTargetId}
           onUserMarkerClick={() => setShowUserLocationInfo(true)}
           showUserLocationInfo={showUserLocationInfo}
           setShowUserLocationInfo={setShowUserLocationInfo}
+          searchedLocation={searchedLocation}
         />
         <CenterList
           centers={displayedCenters}

@@ -13,28 +13,24 @@ function CameraStepOne({ onNext }) {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '', type: '' });
   const [currentFile, setCurrentFile] = useState(null);
-  const [facingMode, setFacingMode] = useState('environment'); // Default to back camera
+  const [facingMode, setFacingMode] = useState('environment'); 
 
   const videoRef = useRef(null);
   const fileInputRef = useRef(null);
   const toastTimeoutRef = useRef(null);
 
-  // Show toast notification
   const showToast = (message, type = 'error') => {
-    // Clear any existing timeout
     if (toastTimeoutRef.current) {
       clearTimeout(toastTimeoutRef.current);
     }
 
     setToast({ show: true, message, type });
 
-    // Auto-hide toast after 5 seconds
     toastTimeoutRef.current = setTimeout(() => {
       setToast({ show: false, message: '', type: '' });
     }, 5000);
   };
 
-  // Hide toast
   const hideToast = () => {
     setToast({ show: false, message: '', type: '' });
     if (toastTimeoutRef.current) {
@@ -84,10 +80,8 @@ function CameraStepOne({ onNext }) {
       videoStream.getTracks().forEach(track => track.stop());
     }
 
-    // Toggle facing mode
     setFacingMode(prevMode => prevMode === 'user' ? 'environment' : 'user');
 
-    // Restart stream with new facing mode
     setTimeout(() => {
       startCameraStream();
     }, 300);
@@ -103,7 +97,6 @@ function CameraStepOne({ onNext }) {
     canvas.height = video.videoHeight;
 
     const ctx = canvas.getContext('2d');
-    // Flip horizontally if using front camera
     if (facingMode === 'user') {
       ctx.translate(canvas.width, 0);
       ctx.scale(-1, 1);
@@ -123,7 +116,7 @@ function CameraStepOne({ onNext }) {
     }
 
     setLoading(true);
-    setCurrentFile(imageFile); // Store the current file for retry capability
+    setCurrentFile(imageFile); 
 
     try {
       const formData = new FormData();
@@ -153,7 +146,6 @@ function CameraStepOne({ onNext }) {
     }
   };
 
-  // Retry the upload with the same file
   const handleRetry = () => {
     if (currentFile) {
       handleImageUpload(currentFile);
@@ -192,7 +184,6 @@ function CameraStepOne({ onNext }) {
         style={{ display: "none" }}
       />
 
-      {/* Toast notification */}
       {toast.show && (
         <div className="toast-notification" style={{
           backgroundColor: toast.type === 'error' ? '#fee2e2' : '#ecfdf5',
@@ -233,7 +224,7 @@ function CameraStepOne({ onNext }) {
         </div>
       )}
 
-      <h1 className="step-title">Step 1: Upload</h1>
+      <h1 className="step-title">Scan & Upload</h1>
       <p className="step-description">
         Click on "Start" and make sure to allow permission for camera
       </p>
@@ -282,15 +273,20 @@ function CameraStepOne({ onNext }) {
         )}
       </div>
 
-      {/* Action button group */}
       {!cameraActive ? (
-        <button
-          onClick={() => setShowOptions(!showOptions)}
-          className="start-button"
-          disabled={loading}
-        >
-          {loading ? "Scanning..." : "Start"}
-        </button>
+        loading ? (
+          <div className="scanning-text">
+            <RefreshCw size={24} className="scanning-icon" />
+            Scanning...
+          </div>
+        ) : (
+          <button
+            onClick={() => setShowOptions(!showOptions)}
+            className="start-button"
+          >
+            Start
+          </button>
+        )
       ) : (
         <div className="camera-controls">
           {!capturedPhoto ? (
@@ -371,9 +367,7 @@ function CameraStepOne({ onNext }) {
 
       {/* Unified Warning and Examples Frame */}
       <div className="unified-frame">
-        {/* Warning Notes Section */}
         <div className="warning-notes">
-          {/* First Warning Note */}
           <div className="warning-note">
             <AlertTriangle size={40} className="warning-icon" />
             <span className="warning-text">
@@ -389,12 +383,9 @@ function CameraStepOne({ onNext }) {
             </span>
           </div>
         </div>
-
         {/* Examples Section */}
         <h3 className="examples-title">Example</h3>
-
         <div className="examples-column">
-          {/* Clear Example */}
           <div className="example-item">
             <p className="example-label">Clear</p>
             <div className="example-image-container" style={{ position: 'relative' }}>
@@ -420,8 +411,6 @@ function CameraStepOne({ onNext }) {
               </div>
             </div>
           </div>
-
-          {/* Blurry Example */}
           <div className="example-item">
             <p className="example-label">Blurry</p>
             <div className="example-image-container" style={{ position: 'relative' }}>

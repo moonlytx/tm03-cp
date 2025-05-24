@@ -20,9 +20,8 @@ export default function CenterDetailsModal({ center, onClose, onShowRoute }) {
           <span>Lat: {center.coordinates.latitude}, Long: {center.coordinates.longitude}</span>
         </div>
         <div className="modal-metadata">
-          <p>First seen: {new Date(center.metadata.first_seen).toLocaleString()}</p>
-          <p>Last updated: {new Date(center.metadata.last_updated).toLocaleString()}</p>
-          <p>Update count: {center.metadata.update_count}</p>
+          <p>Last Update Timestamp (Google API):</p>
+          <p>{new Date(center.metadata.last_updated).toLocaleString()}</p>
         </div>
         <button
           className="show-route-btn"

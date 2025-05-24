@@ -22,7 +22,6 @@
   padding-right: 2rem;
 }
 
-/* Logo formatting */
 .logo-image {
   height: 80px;
   width: auto;
@@ -34,14 +33,12 @@
   
 }
 
-/* Ensure navigation links are aligned to the right */
 .nav-links {
   display: flex;
   gap: 2rem; 
   justify-content: flex-end; 
 }
 
-/* Set formatting for buttons and when hovered over */
 .nav-link {
   color: darkseagreen;
   font-weight: 600;

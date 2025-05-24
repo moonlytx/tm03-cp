@@ -19,6 +19,9 @@ export default function useRecyclingCentersData(defaultCenter) {
   const [displayedCenters, setDisplayedCenters] = useState([]);
   const [routePolyline, setRoutePolyline] = useState(null);
   const [routeTargetId, setRouteTargetId] = useState(null);
+  const [routeInfo, setRouteInfo] = useState(null);
+
+  const locationWatchId = useRef(null);
 
   // Fetch all centers from all pages (no API pagination on frontend)
   const fetchCenters = async () => {
@@ -96,12 +99,16 @@ export default function useRecyclingCentersData(defaultCenter) {
     if (!inputLocation.trim()) return;
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(inputLocation)}&key=AIzaSyBtMH1f3lNDcG_4JXEM9NqTm2z8WZ4nIcs`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(inputLocation)}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
       );
       const data = await response.json();
       if (data.status === 'OK' && data.results.length > 0) {
         const loc = data.results[0].geometry.location;
         setSearchedLocation({ lat: loc.lat, lng: loc.lng });
+        if (locationWatchId.current) {
+          navigator.geolocation.clearWatch(locationWatchId.current);
+          locationWatchId.current = null;
+        }
         setUserLocation({ lat: loc.lat, lng: loc.lng });
         setCurrentPage(1);
       } else {
@@ -126,6 +133,12 @@ export default function useRecyclingCentersData(defaultCenter) {
         },
         (error) => {
           console.error("Error getting location:", error);
+          setUserLocation(defaultCenter);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
         }
       );
     }
@@ -134,6 +147,10 @@ export default function useRecyclingCentersData(defaultCenter) {
 
   // Use default location
   const useDefaultLocation = () => {
+    if (locationWatchId.current) {
+      navigator.geolocation.clearWatch(locationWatchId.current);
+      locationWatchId.current = null;
+    }
     setUserLocation(defaultCenter);
     setShowLocationModal(false);
     setCurrentPage(1);
@@ -142,7 +159,11 @@ export default function useRecyclingCentersData(defaultCenter) {
   // Start location tracking
   const startLocationTracking = () => {
     if ("geolocation" in navigator) {
-      const watchId = navigator.geolocation.watchPosition(
+      if (locationWatchId.current) {
+        navigator.geolocation.clearWatch(locationWatchId.current);
+      }
+
+      locationWatchId.current = navigator.geolocation.watchPosition(
         (position) => {
           setUserLocation({
             lat: position.coords.latitude,
@@ -151,24 +172,26 @@ export default function useRecyclingCentersData(defaultCenter) {
         },
         (error) => {
           console.error("Error watching location:", error);
+          setUserLocation(defaultCenter);
         },
         {
           enableHighAccuracy: true,
-          timeout: 5000,
+          timeout: 10000,
           maximumAge: 0
         }
       );
-      return () => {
-        if (watchId) {
-          navigator.geolocation.clearWatch(watchId);
-        }
-      };
     }
   };
 
-  // Select center card
+  useEffect(() => {
+    return () => {
+      if (locationWatchId.current) {
+        navigator.geolocation.clearWatch(locationWatchId.current);
+      }
+    };
+  }, []);
+
   const handleSelectCenter = (center) => {
-    // 先清除路线，再设置选中的中心
     setRoutePolyline(null);
     setRouteTargetId(null);
     setSelectedCenter(center);
@@ -176,33 +199,27 @@ export default function useRecyclingCentersData(defaultCenter) {
 
   // Show route
   const handleShowRoute = (center) => {
-    // 如果点击的是当前已显示路线的中心，则清除路线
     if (routeTargetId === center.place_id) {
       setRoutePolyline(null);
       setRouteTargetId(null);
     } else {
-      // 否则先清除旧路线，然后设置新的目标
       setRoutePolyline(null);
-      // 使用 setTimeout 确保状态更新顺序
       setTimeout(() => {
         setRouteTargetId(center.place_id);
       }, 0);
     }
   };
 
-  // 获取路线
   useEffect(() => {
     let isMounted = true;
     let timeoutId = null;
 
     const fetchRoute = async () => {
-      // 清除之前的定时器
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
 
-      // 如果没有目标或用户位置，清除路线
-      if (!routeTargetId || !userLocation) {
+      if (!routeTargetId || (!userLocation && !searchedLocation)) {
         if (isMounted) {
           setRoutePolyline(null);
         }
@@ -217,14 +234,16 @@ export default function useRecyclingCentersData(defaultCenter) {
         return;
       }
 
+      const origin = searchedLocation || userLocation;
+
       try {
         const resp = await fetch('https://carbonpatrol.top:8081/api/route', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             origin: {
-              latitude: userLocation.lat,
-              longitude: userLocation.lng,
+              latitude: origin.lat,
+              longitude: origin.lng,
             },
             destination: {
               latitude: center.coordinates.latitude,
@@ -234,20 +253,26 @@ export default function useRecyclingCentersData(defaultCenter) {
         });
         const data = await resp.json();
         if (isMounted) {
-          if (data.success && data.route && data.route.polyline) {
+          if (data.success && data.route) {
             setRoutePolyline(data.route.polyline);
+            setRouteInfo({
+              distance: formatDistance(data.route.distance_meters),
+              duration: formatDuration(data.route.duration_seconds),
+              arrivalTime: calculateArrivalTime(data.route.duration_seconds)
+            });
           } else {
             setRoutePolyline(null);
+            setRouteInfo(null);
           }
         }
       } catch (e) {
         if (isMounted) {
           setRoutePolyline(null);
+          setRouteInfo(null);
         }
       }
     };
 
-    // 使用定时器延迟获取路线，确保状态更新完成
     timeoutId = setTimeout(fetchRoute, 100);
 
     return () => {
@@ -270,6 +295,33 @@ export default function useRecyclingCentersData(defaultCenter) {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
     return distance.toFixed(1);
+  };
+
+  const formatDistance = (meters) => {
+    if (meters < 1000) {
+      return `${meters} m`;
+    }
+    return `${(meters / 1000).toFixed(1)} km`;
+  };
+
+  const formatDuration = (seconds) => {
+    const minutes = Math.round(seconds / 60);
+    if (minutes < 60) {
+      return `${minutes} mins`;
+    }
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return `${hours} hr ${remainingMinutes} mins`;
+  };
+
+  const calculateArrivalTime = (durationSeconds) => {
+    const now = new Date();
+    const arrivalTime = new Date(now.getTime() + durationSeconds * 1000);
+
+    const hours = arrivalTime.getHours().toString().padStart(2, '0');
+    const minutes = arrivalTime.getMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`;
   };
 
   return {
@@ -304,6 +356,7 @@ export default function useRecyclingCentersData(defaultCenter) {
     setRoutePolyline,
     routeTargetId,
     setRouteTargetId,
+    routeInfo,
     handleSelectCenter,
     handleShowRoute,
     handleLocationSearch,

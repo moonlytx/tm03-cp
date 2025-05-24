@@ -31,6 +31,7 @@
 
 .share-button-icon {
   margin-right: 0.5rem;
+  color: white;
 }
 
 /* Preview Modal Styles */
@@ -52,16 +53,16 @@
   background-color: white;
   border-radius: 0.5rem;
   width: 95%;
-  max-width: 1000px; /* Adjusted to prevent horizontal scrolling */
-  height: 95vh; /* Set a fixed height instead of max-height for taller display */
+  max-width: 1000px;
+  height: 95vh; 
   display: flex;
   flex-direction: column;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  overflow: hidden; /* Hide overflow to prevent scrolling on the container itself */
-  position: relative; /* For absolute positioning of close button */
+  overflow: hidden; 
+  position: relative; 
 }
 
-/* X button positioned in top right corner of the window - updated to remove borders and background */
+
 .close-button-absolute {
   position: absolute;
   top: 1rem;
@@ -87,11 +88,11 @@
 .preview-header {
   background-color: #F0FFF0;
   display: flex;
-  justify-content: center; /* Center the header text */
+  justify-content: center; 
   align-items: center;
   padding: 1.25rem 2rem;
   border-bottom: 1px solid #e5e7eb;
-  flex-shrink: 0; /* Prevent header from shrinking */
+  flex-shrink: 0; 
 }
 
 .preview-header h3 {
@@ -105,15 +106,15 @@
   padding: 2rem;
   display: flex;
   justify-content: center;
-  flex: 1; /* Take up all available space */
-  overflow-y: auto; /* Allow vertical scrolling for the image */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  flex: 1; 
+  overflow-y: auto; 
+  overflow-x: hidden; 
   background-color: #f9fafb;
 }
 
 .preview-image {
-  max-width: 100%; /* Ensure image doesn't overflow container width */
-  object-fit: contain; /* Maintain aspect ratio while fitting container */
+  max-width: 100%; 
+  object-fit: contain; 
   height: auto;
   border: 1px solid #e5e7eb;
   border-radius: 0.25rem;
@@ -125,7 +126,7 @@
   justify-content: center;
   padding: 1.5rem 2rem;
   border-top: 1px solid #e5e7eb;
-  flex-shrink: 0; /* Prevent footer from shrinking */
+  flex-shrink: 0; 
 }
 
 .share-option {
@@ -139,20 +140,20 @@
   cursor: pointer;
   transition: all 0.2s;
   gap: 0.5rem;
-  white-space: nowrap; /* Prevent button text from wrapping */
+  white-space: nowrap; 
 }
 
 .download {
   background-color: #16a34a;
   color: white;
   width: 100%;
-  max-width: 300px; /* Limit width on bigger screens */
+  max-width: 300px; 
 }
 
 .download:hover {
   background-color: #15803d;
 }
 
-.option-icon {
+.share-option-icon {
   margin-right: 0.25rem;
 }

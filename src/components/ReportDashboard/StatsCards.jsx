@@ -3,9 +3,7 @@ import personal_bin_collected from '../../assets/images/ReportDashboard/personal
 import personal_gco2e from '../../assets/images/ReportDashboard/personal_gco2e.png';
 import './StatsCards.css';
 
-
 const StatsCards = ({ totalCarbonEmission, wastebinCollected }) => {
-  // Format carbon emission value the same way as in your original code
   const formattedCarbon = totalCarbonEmission ? Number(totalCarbonEmission.toFixed(2)).toLocaleString(): '0.00';
 
   return (
@@ -31,6 +29,5 @@ const StatsCards = ({ totalCarbonEmission, wastebinCollected }) => {
     </div>
   );
 }
-
 
 export default StatsCards;

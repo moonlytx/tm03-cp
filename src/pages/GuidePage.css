@@ -1,0 +1,36 @@
+/* Main GuidePage styles */
+.container {
+  min-height: 100vh;
+  background-color: white;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.content-container {
+  max-width: 2000px;
+  margin: 0 auto;
+}
+
+.recycling-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+}
+
+.recycling-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  width: 100%;
+  position: relative;
+}
+
+.recycling-header h1 {
+  color: var(--highlight-color);
+  margin-bottom: 1rem; 
+}
+
+.recycling-header p {
+  font-size: 1.1rem;
+  color: #166534;
+}

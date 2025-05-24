@@ -14,7 +14,7 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   min-height: 100vh;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-x: hidden; 
 }
 
 .content-container {
@@ -31,14 +31,14 @@ body {
   margin: 0;
   padding: 0;
   text-align: center;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-x: hidden; 
 }
 
 .waste-app {
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-x: hidden; 
 }
 
 /* Fade-in animation */
@@ -55,7 +55,7 @@ body {
 .waste-app > * {
   opacity: 0;
   animation: fadeIn 1s ease-in-out forwards;
-  max-width: 100%; /* Ensure children don't overflow */
+  max-width: 100%; 
 }
 .waste-app > *:nth-child(1) { animation-delay: 0.2s; }
 .waste-app > *:nth-child(2) { animation-delay: 0.4s; }

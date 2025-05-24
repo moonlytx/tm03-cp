@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { exportDataAsDB, importDataFromDB } from '../services/dataService';
 
 const useWasteData = () => {
-  // All state hooks must be called unconditionally at the top level
   const [wasteItems, setWasteItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,14 +32,12 @@ const useWasteData = () => {
   const [totalCarbonEmission, setTotalCarbonEmission] = useState(() => {
     return parseFloat(localStorage.getItem('totalCarbonEmission') || '0');
   });
-  // New state for community carbon emission
   const [communityCarbonEmission, setCommunityCarbonEmission] = useState(0);
 
-  // Calculate progress percentage after the state is initialized
   const progressPercentage = Math.round((totalWaste / 60) * 100);
 
-  // Fetch waste items and community carbon emission
   useEffect(() => {
+    // Fetch waste items and community carbon emission
     const fetchWasteItems = async () => {
       try {
         setIsLoading(true);
@@ -83,7 +80,7 @@ const useWasteData = () => {
       return data.total || 0;
     } catch (err) {
       console.error("Failed to fetch community carbon emission:", err);
-      return communityCarbonEmission; // Return current value if fetch fails
+      return communityCarbonEmission;
     }
   };
 
@@ -103,11 +100,9 @@ const useWasteData = () => {
       const data = await response.json();
       console.log('Carbon footprint saved:', data);
 
-      // Update community carbon emission after successful save
       if (data.new_total) {
         setCommunityCarbonEmission(data.new_total);
       } else {
-        // If new_total not provided, fetch the latest
         fetchCommunityCarbonEmission();
       }
 
@@ -170,7 +165,6 @@ const useWasteData = () => {
     setHasUnsavedChanges(true);
   };
 
-  // Direct method to add items and save immediately
   const addItemAndSave = async (materialName, quantity = 1) => {
     const matchedItem = wasteItems.find(item =>
       item.item.toLowerCase() === materialName.toLowerCase()
@@ -181,7 +175,6 @@ const useWasteData = () => {
       return false;
     }
 
-    // First update counts
     const newCounts = {
       ...counts,
       [matchedItem.id]: (counts[matchedItem.id] || 0) + quantity
@@ -189,7 +182,6 @@ const useWasteData = () => {
     localStorage.setItem('wasteCounts', JSON.stringify(newCounts));
     setCounts(newCounts);
 
-    // Then immediately calculate and save all data
     let newWeight = 0;
     let newCount = 0;
     let newCarbon = 0;
@@ -239,12 +231,10 @@ const useWasteData = () => {
     setTotalAccumulatedWaste(updatedTotalAccumulatedWaste);
     setTotalCarbonEmission(updatedTotalCarbonEmission);
 
-    // Save carbon emission to database
     if (newCarbon > 0) {
       await saveCarbonEmissionToDatabase(newCarbon);
     }
 
-    // Show toast messages
     if (cycles > 0) {
       toast.success(`Awesome! You've planted ${cycles} new tree${cycles > 1 ? 's' : ''}! Progress: ${updatedTotalWaste.toFixed(1)}/60kg`);
     }
@@ -302,7 +292,6 @@ const useWasteData = () => {
       setTotalAccumulatedWaste(updatedTotalAccumulatedWaste);
       setTotalCarbonEmission(updatedTotalCarbonEmission);
 
-      // Save carbon emission to database
       if (newCarbon > 0) {
         await saveCarbonEmissionToDatabase(newCarbon);
       }
@@ -342,7 +331,6 @@ const useWasteData = () => {
       const result = await importDataFromDB(file);
       
       if (result.success) {
-        // Refresh all state values from localStorage
         const savedCounts = localStorage.getItem('wasteCounts');
         setCounts(savedCounts ? JSON.parse(savedCounts) : {});
         
@@ -364,9 +352,7 @@ const useWasteData = () => {
     }
   };
 
-  // Include new functions in the return object
   return {
-    // All existing returned values
     wasteItems,
     isLoading,
     error,

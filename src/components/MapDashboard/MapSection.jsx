@@ -11,9 +11,12 @@ export default function MapSection({
   bin,
   isOpen,
   routePolyline,
+  routeInfo,
+  routeTargetId,
   onUserMarkerClick,
   showUserLocationInfo,
-  setShowUserLocationInfo
+  setShowUserLocationInfo,
+  searchedLocation
 }) {
   const mapContainerStyle = {
     width: '100%',
@@ -23,7 +26,6 @@ export default function MapSection({
   const mapRef = useRef(null);
   const polylineRef = useRef(null);
 
-  // 清除路线
   const clearRoute = () => {
     if (polylineRef.current) {
       polylineRef.current.setMap(null);
@@ -31,7 +33,7 @@ export default function MapSection({
     }
   };
 
-  // 当 routePolyline 变化时处理路线
+  // Handle route when routePolyline changes
   useEffect(() => {
     if (!routePolyline || !window.google?.maps?.geometry || !mapRef.current) {
       clearRoute();
@@ -41,10 +43,10 @@ export default function MapSection({
     try {
       const decodedPath = window.google.maps.geometry.encoding.decodePath(routePolyline);
       if (decodedPath.length > 0) {
-        // 清除旧路线
+        // Clear old route
         clearRoute();
 
-        // 创建新路线
+        // Create new route
         const newPolyline = new window.google.maps.Polyline({
           path: decodedPath,
           strokeColor: '#22c55e',
@@ -53,10 +55,8 @@ export default function MapSection({
           map: mapRef.current
         });
 
-        // 保存引用
         polylineRef.current = newPolyline;
 
-        // 调整地图视野
         const bounds = new window.google.maps.LatLngBounds();
         decodedPath.forEach(point => bounds.extend(point));
         mapRef.current.fitBounds(bounds);
@@ -66,7 +66,7 @@ export default function MapSection({
       clearRoute();
     }
 
-    // 清理函数
+    // Cleanup function
     return () => {
       clearRoute();
     };
@@ -77,7 +77,7 @@ export default function MapSection({
       <div className="map-placeholder">
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
-          center={userLocation || defaultCenter}
+          center={searchedLocation || userLocation || defaultCenter}
           zoom={12}
           options={{
             zoomControl: true,
@@ -87,8 +87,20 @@ export default function MapSection({
           }}
           onLoad={map => { mapRef.current = map; }}
         >
-          {/* User location marker */}
-          {userLocation && userLocation !== defaultCenter && (
+          {/* Searched location marker */}
+          {searchedLocation && (
+            <Marker
+              position={searchedLocation}
+              icon={{
+                url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                scaledSize: new window.google.maps.Size(40, 40),
+              }}
+              onClick={onUserMarkerClick}
+            />
+          )}
+
+          {/* User location marker (only show when no searched location) */}
+          {userLocation && userLocation !== defaultCenter && !searchedLocation && (
             <>
               <Marker
                 position={userLocation}
@@ -139,6 +151,34 @@ export default function MapSection({
               }}
             />
           ))}
+
+          {routeInfo && routeTargetId && displayedCenters.find(c => c.place_id === routeTargetId) && (
+            <InfoWindow
+              position={{
+                lat: displayedCenters.find(c => c.place_id === routeTargetId).coordinates.latitude,
+                lng: displayedCenters.find(c => c.place_id === routeTargetId).coordinates.longitude
+              }}
+              options={{
+                pixelOffset: new window.google.maps.Size(0, -40),
+                disableAutoPan: true,
+              }}
+            >
+              <div className="route-info">
+                <div className="route-info-item">
+                  <span className="route-info-label">Distance:</span>
+                  <span className="route-info-value">{routeInfo.distance}</span>
+                </div>
+                <div className="route-info-item">
+                  <span className="route-info-label">Duration:</span>
+                  <span className="route-info-value">{routeInfo.duration}</span>
+                </div>
+                <div className="route-info-item">
+                  <span className="route-info-label">Estimated Arrival:</span>
+                  <span className="route-info-value">{routeInfo.arrivalTime}</span>
+                </div>
+              </div>
+            </InfoWindow>
+          )}
         </GoogleMap>
       </div>
     </div>

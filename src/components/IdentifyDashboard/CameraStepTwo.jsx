@@ -3,21 +3,18 @@ import { CheckCircle, Recycle, Trash2, AlertTriangle, ListRestart, ChevronsDown 
 import './CameraStepOne.css';
 import './CameraStepTwo.css';
 import useWasteData from '../../hooks/useWasteData';
+import { Link, useNavigate } from 'react-router-dom';
 
 function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = false, savedRecycleStatus = false,
   savedQuantity = 1 }) {
-  // Use state to track if dialogs have been shown
+  const navigate = useNavigate();
   const [hasShownDialogs, setHasShownDialogs] = useState(dialogAlreadyShown);
-  // State for showing reuse materials section
   const [showReuseTips, setShowReuseTips] = useState(false);
-  // New state for animation
   const [isClosing, setIsClosing] = useState(false);
   const reuseTipsRef = useRef(null);
-
-  // State for recycling dialogs
   const [showChoiceDialog, setShowChoiceDialog] = useState(false);
   const [showQuantityDialog, setShowQuantityDialog] = useState(false);
-  const [itemQuantity, setItemQuantity] = useState('1'); // Set the default value to "1"
+  const [itemQuantity, setItemQuantity] = useState('1'); 
   const [isRecycled, setIsRecycled] = useState(savedRecycleStatus);
   const [userQuantity, setUserQuantity] = useState(savedQuantity);
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,17 +26,14 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
       return { count: 0, materials: [], isRecyclable: false, recommendations: [] };
     }
 
-    // Find the detection with highest confidence
     let highestConfidenceDetection = capturedData.detections[0];
 
-    // If there are multiple detections, find the one with highest confidence
     if (capturedData.detections.length > 1) {
       highestConfidenceDetection = capturedData.detections.reduce((prev, current) => {
         return (prev.confidence > current.confidence) ? prev : current;
       });
     }
 
-    // Get only the highest confidence material
     const material = highestConfidenceDetection.class;
 
     // Check if material is "Unrecyclable" or similar
@@ -50,7 +44,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
       parseRecommendations(highestConfidenceDetection.recommendations) : [];
 
     return {
-      count: 1, // Always show 1 since we're only keeping the highest confidence item
+      count: 1, 
       materials: [material],
       isRecyclable,
       confidence: highestConfidenceDetection.confidence,
@@ -63,14 +57,11 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
     if (!recommendationsStr) return [];
     
     try {
-      // Parse the string-based recommendations into an array
-      // The format appears to be numbered like "\n\n1. **Title:** Description\n\n2. **Title:** Description"
       const items = recommendationsStr.split(/\d+\.\s+\*\*/).filter(item => item.trim());
       
       return items.map(item => {
-        // Clean up the format from "Title:** Description" to just "Description"
         return item.replace(/^.*?\*\*\s*/, '').trim();
-      }).filter(tip => tip); // Filter out any empty strings
+      }).filter(tip => tip); 
     } catch (e) {
       console.error("Error parsing recommendations:", e);
       return [];
@@ -119,21 +110,16 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
   const handleSkipRecycle = () => {
     setShowChoiceDialog(false);
     setIsRecycled(false);
-    // Just proceed without recycling but stay on this screen
-    // User must press next button to continue
   };
 
-  // Handle input change with validation
   const handleQuantityChange = (e) => {
     const value = e.target.value;
-    // Allow empty or positive integers
     if (value === '' || /^\d+$/.test(value)) {
       setItemQuantity(value);
       setErrorMessage('');
     }
   };
 
-  // Handle final submission after quantity input - SIMPLIFIED with new addItemAndSave method
   const handleSubmitRecycling = () => {
     if (itemQuantity === '') {
       setErrorMessage('Please enter the quantity of items you are recycling.');
@@ -142,7 +128,6 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
 
     const quantity = parseInt(itemQuantity);
 
-    // Close dialog
     setShowQuantityDialog(false);
     setErrorMessage('');
     setIsRecycled(true);
@@ -150,7 +135,6 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
 
     if (materials.length > 0) {
       const materialName = materials[0].toLowerCase();
-      // Use the new method that updates and saves in one atomic operation
       addItemAndSave(materialName, quantity);
     }
   };
@@ -165,7 +149,7 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
       recycled: isRecycled,
       quantity: quantity,
       pointsEarned: pointsEarned,
-      dialogShown: true // Pass this to parent to remember dialog was shown
+      dialogShown: true 
     });
   };
 
@@ -176,26 +160,27 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
     }
   };
 
+  // Handle check points click - Navigate to ReportPage
+  const handleCheckPoints = () => {
+    // Navigate to the ReportPage
+    navigate('/report');
+  };
+
   // Modified toggle function for reuse tips with animation
   const toggleReuseTips = () => {
     if (showReuseTips) {
-      // Start closing animation
       setIsClosing(true);
-      // Wait for animation to finish before actually hiding
       setTimeout(() => {
         setShowReuseTips(false);
         setIsClosing(false);
-      }, 300); // Match this to animation duration
+      }, 300); 
     } else {
-      // Just show immediately
       setShowReuseTips(true);
     }
   };
 
-  // Get current material name
   const materialName = materials.length > 0 ? materials[0] : '';
 
-  // Calculate estimates for dialog display
   const quantity = itemQuantity === '' ? 0 : parseInt(itemQuantity);
   const { weightKg, carbonKg } = calculateEstimates(materialName, quantity);
 
@@ -246,7 +231,6 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
         "Use as compost material for gardening"
       ];
     } else {
-      // Return empty array for unknown materials
       return [];
     }
   };
@@ -255,9 +239,11 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
   const reuseTips = recommendations && recommendations.length > 0 ? 
     recommendations : getFallbackReuseTips(materialName);
 
+  
+    
   return (
     <div className="camera-interface">
-      <h1 className="step-title">Step 2: Analysis</h1>
+      <h1 className="step-title">Analysis Results</h1>
       <p className="step-description">
         Here are the results!
       </p>
@@ -287,7 +273,6 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
       </div>
 
       <div className="detection-results-container">
-        {/* Show different icon based on recyclability */}
         <div className="recycle-icon-container">
           {isRecyclable ?
             <Recycle size={100} color="#22c55e" /> :
@@ -295,11 +280,9 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
           }
         </div>
 
-        {/* Always use green background for results */}
         <div className="detection-results green-background">
           {count > 0 ? (
             <>
-              {/* Switched the order of these two elements */}
               <div className="detection-item">
                 <div className="detection-bullet">•</div>
                 <div className={isRecyclable ? "recyclable-indicator" : "non-recyclable-indicator"}>
@@ -334,7 +317,6 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
         </div>
       </div>
 
-      {/* Reuse Materials Section - ONLY SHOWN FOR RECYCLABLE ITEMS */}
       {count > 0 && materials.length > 0 && isRecyclable && (
         <div className="reuse-materials-section">
           <button 
@@ -368,12 +350,15 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
         </div>
       )}
 
-      {/* Scan Another Item button */}
-      <button onClick={handleScanAnother} className="scan-another-button">
-        Scan Another Item
-      </button>
+      <div className="action-buttons-container">
+        <button onClick={handleScanAnother} className="next-step-button">
+          Scan Another Item
+        </button>
+        <button onClick={handleCheckPoints} className="next-step-button">
+          Progress Check
+        </button>
+      </div>
 
-      {/* Choice dialog modal */}
       {showChoiceDialog && count > 0 && isRecyclable && (
         <div className="modal-overlay">
           <div className="modal-container">
@@ -404,7 +389,6 @@ function CameraStepTwo({ onNext, onReset, capturedData, dialogAlreadyShown = fal
         </div>
       )}
 
-      {/* Quantity input dialog modal */}
       {showQuantityDialog && (
         <div className="modal-overlay">
           <div className="modal-container">

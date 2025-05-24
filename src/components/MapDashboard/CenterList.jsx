@@ -6,7 +6,11 @@ export default function CenterList({ centers, selectedCenter, onSelectCenter, us
     <div className="centers-list">
       {centers.length === 0 ? (
         <div className="no-centers-found">
-          No recycling centers found.
+          {userLocation ? (
+            "No recycling centers found within 10km of your location."
+          ) : (
+            "No recycling centers found."
+          )}
         </div>
       ) : (
         centers.map((center, idx) => (

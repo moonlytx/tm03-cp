@@ -2,10 +2,9 @@ import React from 'react';
 import './AccumulatedWeights.css';
 
 const AccumulatedWeights = ({ wasteItems, accumulatedWeights, totalAccumulatedWaste }) => {
-  // Filter out items named "Unrecyclable"
+  // Filter out items named "Unrecyclable" and calculate Total Weight
   const filteredWasteItems = wasteItems.filter(item => item.item !== "Unrecyclable");
 
-  // Calculate the total without the unrecyclable items
   const displayedTotalWeight = filteredWasteItems.reduce(
     (total, item) => total + (accumulatedWeights[item.id] || 0),
     0

@@ -17,10 +17,8 @@ export const exportDataAsDB = () => {
   const blob = new Blob([jsonData], { type: 'application/octet-stream' });
   const url = URL.createObjectURL(blob);
   
-  // Get the user name from localStorage, or use 'user' as default
   const userName = localStorage.getItem('userName') || 'user';
   
-  // Format the date as YYYY-MM-DD
   const date = new Date().toISOString().slice(0, 10);
   
   // Create the new file name with the CarbonPatrol prefix, user name, and date
